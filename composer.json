@@ -1,0 +1,16 @@
+{
+    "name": "assaneba/blog-pro",
+    "authors": [
+        {
+            "name": "Assane Thione Ba",
+            "email": "assanetb@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Controller\\": "src/Controller",
+            "Model\\": "src/Model/"
+        }
+    }
+}
