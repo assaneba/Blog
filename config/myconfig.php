@@ -10,8 +10,8 @@
  * APP CONFIG
  */
 define('DEV_ENV', true);
-define('TEMPLATE_DIR', __DIR__ . '/../views');
-define('PUBLIC_DIR', __DIR__.'/../public');
+define('TEMPLATE_DIR', __DIR__ . '/../src/views');
+define('PUBLIC_DIR', __DIR__ . '/../public');
 
 /**
  * DB CONFIG

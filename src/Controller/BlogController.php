@@ -4,10 +4,10 @@
 namespace Controller;
 
 use Manager\PostManager;
-use Model\Post;
 
-class BlogController
+class BlogController extends Controller
 {
+
     public function index()
     {
         echo '<h1> Page accueil du blog </h1>';
@@ -19,8 +19,14 @@ class BlogController
 
     }
 
-    public function article($params)
+    public function article()
     {
-        echo 'Voir un article '. $params;
+        //echo 'Voir un article '. $params;
+        echo $this->twig->render('layout.html.twig',
+            array(
+                'post' => 'component of post'
+            )
+            );
+
     }
 }

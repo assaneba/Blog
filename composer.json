@@ -9,7 +9,9 @@
             "email": "assanetb@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "twig/twig": "^2.0"
+    },
     "autoload": {
         "psr-4": {
             "Controller\\": "src/Controller",
@@ -19,7 +21,7 @@
     },
     "config": {
         "platform": {
-            "php": "^7.2"
+            "php": "7.2"
         }
     }
 }

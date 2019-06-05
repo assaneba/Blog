@@ -21,7 +21,7 @@ $params = [
 
 /**
  * Verify wich class controller is called and its $target and $params if they exist
- * Or it justs call the index target or action of the controller
+ * Or it just call the index action of the controller
  */
 if (class_exists($class, true))
 {

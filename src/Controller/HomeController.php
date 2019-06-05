@@ -3,17 +3,12 @@
 
 namespace Controller;
 
-
-class HomeController
+class HomeController extends Controller
 {
-    /**
-     * Home page controller.
-     *
-     * @param
-     */
 
     public function index() {
-        echo 'Page Accueil du site' ;
+        //echo 'Page Accueil du site' ;
+        echo $view = $this->twig->render('layout.html.twig');
     }
 
 }
