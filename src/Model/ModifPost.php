@@ -6,7 +6,7 @@ namespace Model;
 
 class ModifPost
 {
-    private $date_modif;
+    private $dateModif;
     private $post;
 
     /**
@@ -14,16 +14,16 @@ class ModifPost
      */
     public function getDateModif()
     {
-        return $this->date_modif;
+        return $this->dateModif;
     }
 
     /**
-     * @param mixed $date_modif
+     * @param mixed $dateModif
      * @return ModifPost
      */
-    public function setDateModif($date_modif)
+    public function setDateModif($dateModif)
     {
-        $this->date_modif = $date_modif;
+        $this->dateModif = $dateModif;
         return $this;
     }
 
@@ -36,11 +36,11 @@ class ModifPost
     }
 
     /**
-     * @param mixed $post_idpost
+     * @param mixed $postIdpost
      * @var integer
      * @return ModifPost
      */
-    public function setPost(Post $post)
+    public function setPost($post)
     {
         $this->post = $post;
         return $this;

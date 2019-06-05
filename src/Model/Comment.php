@@ -6,9 +6,9 @@ namespace Model;
 
 class Comment
 {
-    private $id_comment;
-    private $date_comment;
-    private $date_last_modif;
+    private $idComment;
+    private $dateComment;
+    private $dateLastModif;
     private $content;
     private $published;
     private $post;
@@ -18,16 +18,16 @@ class Comment
      */
     public function getIdComment()
     {
-        return $this->id_comment;
+        return $this->idComment;
     }
 
     /**
-     * @param mixed $id_comment
+     * @param mixed $idComment
      * @return Comment
      */
-    public function setIdComment($id_comment)
+    public function setIdComment($idComment)
     {
-        $this->id_comment = $id_comment;
+        $this->idComment = $idComment;
         return $this;
     }
 
@@ -36,16 +36,16 @@ class Comment
      */
     public function getDateComment()
     {
-        return $this->date_comment;
+        return $this->dateComment;
     }
 
     /**
-     * @param mixed $date_comment
+     * @param mixed $dateComment
      * @return Comment
      */
-    public function setDateComment($date_comment)
+    public function setDateComment($dateComment)
     {
-        $this->date_comment = $date_comment;
+        $this->dateComment = $dateComment;
         return $this;
     }
 
@@ -54,16 +54,16 @@ class Comment
      */
     public function getDateLastModif()
     {
-        return $this->date_last_modif;
+        return $this->dateLastModif;
     }
 
     /**
-     * @param mixed $date_last_modif
+     * @param mixed $dateLastModif
      * @return Comment
      */
-    public function setDateLastModif($date_last_modif)
+    public function setDateLastModif($dateLastModif)
     {
-        $this->date_last_modif = $date_last_modif;
+        $this->dateLastModif = $dateLastModif;
         return $this;
     }
 
@@ -115,7 +115,7 @@ class Comment
      * @param mixed $post
      * @return Comment
      */
-    public function setPost(Post $post)
+    public function setPost($post)
     {
         $this->post = $post;
         return $this;

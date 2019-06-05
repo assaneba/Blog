@@ -6,7 +6,7 @@ namespace Model;
 
 class Category
 {
-    private $id_category;
+    private $idCategory;
     private $name;
 
     /**
@@ -14,16 +14,16 @@ class Category
      */
     public function getIdCategory()
     {
-        return $this->id_category;
+        return $this->idCategory;
     }
 
     /**
-     * @param mixed $id_category
+     * @param mixed $idCategory
      * @return Category
      */
-    public function setIdCategory($id_category)
+    public function setIdCategory($idCategory)
     {
-        $this->id_category = $id_category;
+        $this->idCategory = $idCategory;
         return $this;
     }
 

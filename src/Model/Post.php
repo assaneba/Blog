@@ -10,34 +10,43 @@ class Post
     private $title;
     private $lead;
     private $content;
-    private $date_creation;
-    private $post_public;
-    private $date_planned;
+    private $dateCreation;
+    private $postPublic;
+    private $datePlanned;
     private $user;
 
-    public function __construct(array $inputs)
+ //On construit l'objet post grâce aux données $inputs recupérées dans la fonction getOne($id) de la classe PostManager
+    public function __construct($inputs)
     {
-        $this->hydrate($inputs);
+        $this->setIdpost($inputs->idpost);
+        $this->setTitle($inputs->title);
+        $this->setLead($inputs->lead);
+        $this->setContent($inputs->content);
+        $this->setDateCreation($inputs->date_creation);
+        $this->setPostPublic($inputs->post_public);
+        $this->setDatePlanned($inputs->date_planned);
+        $this->setUser($inputs->user_iduser);
+        //$this->hydrate($inputs);
     }
 
     // Attribuer des valeurs dynamiquement via les setters aux champs des valeurs d'un objet post
 
-    public function hydrate(array $inputs)
+    /*public function hydrate($inputs)
     {
+
         foreach ($inputs as $key => $value)
         {
             $method = 'set'.ucfirst($key);
             if (method_exists($this, $method))
             {
-                //echo "{$method}  existe Valeur => {$value} <br>";
+                echo "{$method}  existe Valeur => {$value} <br>";
                 $this->$method($value);
             }
             else {
                 //echo $method . ' NOT FOUND.<br>';
             }
         }
-    }
-
+    }*/
     /**
      * @return mixed
      */
@@ -47,7 +56,7 @@ class Post
     }
 
     /**
-     * @param mixed $idpost
+     * @param integer $idpost
      * @return Post
      */
     public function setIdpost($idpost)
@@ -113,71 +122,71 @@ class Post
     /**
      * @return mixed
      */
-    public function getDate_creation()
+    public function getDateCreation()
     {
-        return $this->date_creation;
+        return $this->dateCreation;
     }
 
     /**
-     * @param mixed $date_creation
+     * @param mixed $dateCreation
      * @return Post
      */
-    public function setDate_creation($date_creation)
+    public function setDateCreation($dateCreation)
     {
-        $this->date_creation = $date_creation;
+        $this->dateCreation = $dateCreation;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getPost_public()
+    public function getPostPublic()
     {
-        return $this->post_public;
+        return $this->postPublic;
     }
 
     /**
-     * @param mixed $post_public
+     * @param mixed $postPublic
      * @var boolean
      * @return Post
      */
-    public function setPost_public($post_public)
+    public function setPostPublic($postPublic)
     {
-        $this->post_public = $post_public;
+        $this->postPublic = $postPublic;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getDate_planned()
+    public function getDatePlanned()
     {
-        return $this->date_planned;
+        return $this->datePlanned;
     }
 
     /**
-     * @param mixed $date_planned
+     * @param mixed $datePlanned
      * @return Post
      */
-    public function setDate_planned($date_planned)
+    public function setDatePlanned($datePlanned)
     {
-        $this->date_planned = $date_planned;
+        $this->datePlanned = $datePlanned;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getUser_iduser()
+    public function getUser()
     {
         return $this->user;
     }
 
     /**
-     * @param mixed $id_user
+     * @param mixed $user
      * @return Post
      */
-    public function setUser_iduser($user)
+    public function setUser($user)
     {
         $this->user = $user;
         return $this;

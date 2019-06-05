@@ -10,13 +10,12 @@
  * APP CONFIG
  */
 define('DEV_ENV', true);
-define('TEMPLATE_DIR', __DIR__.'/../views');
+define('TEMPLATE_DIR', __DIR__ . '/../views');
 define('PUBLIC_DIR', __DIR__.'/../public');
 
 /**
  * DB CONFIG
  */
-//define( 'REDBEAN_MODEL_PREFIX', '' );
 define('DB_NAME', 'blog');
 define('DB_USER', 'root');
 define('DB_PWD', 'root');

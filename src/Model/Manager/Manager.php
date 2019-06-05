@@ -6,16 +6,16 @@ namespace Manager;
 use Exception;
 use PDO;
 
-// On inclut myconfig.php qui contient les données d'accès ç la base de données
-
 require_once __DIR__.'/../../../config/myconfig.php';
 
 abstract class Manager
 {
     protected $db;
 
-    //Fonction de connexion à la base de données qui sera héritée par les classes Manager
-
+    /**
+     * @return PDO
+     * Function for database connection which uses data in config/myconfig
+     */
     public function connectToDB()
     {
         try {

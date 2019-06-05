@@ -1,23 +1,17 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: wathi
- * Date: 19/07/2018
- * Time: 15:34
+ * APP CONFIG
  */
+/*define('DEV_ENV', true);
+define('TEMPLATE_DIR', __DIR__ . '/../views');
+define('PUBLIC_DIR', __DIR__.'/../public');*/
 
-require_once __DIR__.'/myconfig.php';
-
-/*function connect()
-{
-    try {
-        $db = new PDO('mysql:host=' . HOST_NAME . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PWD);
-        //echo 'good !';
-        return $db;
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
-}
-
-$test = connect();
-var_dump($test);*/
+/**
+ * DB CONFIG
+ */
+/*define('DB_NAME', 'your_db_name');
+define('DB_USER', 'your_db_user');
+define('DB_PWD', 'your_password');
+define('HOST_NAME', 'your_host');
+define('DRIVER', 'mysql');*/

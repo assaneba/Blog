@@ -39,7 +39,7 @@ class CategoryHasPost
      * @param mixed $post
      * @return CategoryHasPost
      */
-    public function setPost(Post $post)
+    public function setPost($post)
     {
         $this->post = $post;
         return $this;

@@ -1,5 +1,8 @@
 {
     "name": "assaneba/blog-pro",
+    "version": "0.1.0",
+    "type": "Personal Blog",
+    "license": "MIT",
     "authors": [
         {
             "name": "Assane Thione Ba",
@@ -12,6 +15,11 @@
             "Controller\\": "src/Controller",
             "Model\\": "src/Model",
             "Manager\\": "src/Model/Manager"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "^7.2"
         }
     }
 }

@@ -6,29 +6,40 @@ namespace Model;
 
 class User
 {
-    private $id_user;
+    private $idUser;
     private $login;
     private $password;
-    private $first_name;
-    private $last_name;
+    private $firstName;
+    private $lastName;
     private $email;
-    private $user_role;
+    private $userRole;
+
+    public function __construct($inputs)
+    {
+        $this->setIdUser($inputs->iduser);
+        $this->setLogin($inputs->login);
+        $this->setPassword($inputs->password);
+        $this->setFirstName($inputs->first_name);
+        $this->setLastName($inputs->last_name);
+        $this->setEmail($inputs->email);
+        $this->setUserRole($inputs->user_role);
+    }
 
     /**
      * @return mixed
      */
     public function getIdUser()
     {
-        return $this->id_user;
+        return $this->idUser;
     }
 
     /**
-     * @param mixed $id_user
+     * @param mixed $idUser
      * @return User
      */
-    public function setIdUser($id_user)
+    public function setIdUser($idUser)
     {
-        $this->id_user = $id_user;
+        $this->idUser = $idUser;
         return $this;
     }
 
@@ -73,16 +84,16 @@ class User
      */
     public function getFirstName()
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
     /**
-     * @param mixed $first_name
+     * @param mixed $firstName
      * @return User
      */
-    public function setFirstName($first_name)
+    public function setFirstName($firstName)
     {
-        $this->first_name = $first_name;
+        $this->firstName = $firstName;
         return $this;
     }
 
@@ -91,16 +102,16 @@ class User
      */
     public function getLastName()
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
     /**
-     * @param mixed $last_name
+     * @param mixed $lastName
      * @return User
      */
-    public function setLastName($last_name)
+    public function setLastName($lastName)
     {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
         return $this;
     }
 
@@ -128,16 +139,16 @@ class User
      */
     public function getUserRole()
     {
-        return $this->user_role;
+        return $this->userRole;
     }
 
     /**
-     * @param mixed $user_role
+     * @param mixed $userRole
      * @return User
      */
-    public function setUserRole($user_role)
+    public function setUserRole($userRole)
     {
-        $this->user_role = $user_role;
+        $this->userRole = $userRole;
         return $this;
     }
 
