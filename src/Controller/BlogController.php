@@ -22,7 +22,7 @@ class BlogController extends Controller
     public function article()
     {
         //echo 'Voir un article '. $params;
-        echo $this->twig->render('layout.html.twig',
+        echo $this->twig->render('home.html.twig',
             array(
                 'post' => 'component of post'
             )
