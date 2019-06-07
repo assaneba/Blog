@@ -5100,6 +5100,8 @@ input[type="button"].btn-block {
     orphans: 1;
     widows: 1;
   }
+
+
   .card-columns .card {
     display: inline-block;
     width: 100%;
