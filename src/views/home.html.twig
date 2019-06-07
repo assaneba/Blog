@@ -1,14 +1,18 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}Assane Thione Ba{% endblock %}
+{% block title %} Assane Thione Ba {% endblock %}
+
 
 {% block Content %}
+
+    <link href="../public/css/cards-blog.css" rel="stylesheet">
+
     <!-- Masthead -->
-    <header class="masthead bg-primary text-white text-center">
+    <header class="masthead bg-primary text-white text-center" id="moving-background">
         <div class="container d-flex align-items-center flex-column">
 
             <!-- Masthead Avatar Image -->
-            <img class="masthead-avatar mb-5" src="../public/img/avataaars.svg" alt="">
+            <img class="masthead-avatar mb-5" src="../public/img/my-profile-2.png" alt="">
 
             <!-- Masthead Heading -->
             <h1 class="masthead-heading text-uppercase mb-0">Assane Thione Ba</h1>
@@ -24,6 +28,10 @@
 
             <!-- Masthead Subheading -->
             <p class="masthead-subheading font-weight-light mb-0">FullStack Web Developer - UX Designer - IT Manager</p>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+            <p class="masthead-subheading font-weight-bold mb-0 font-italic">Confiez-moi votre projet et j'en fais une réalité ! </p>
+                <div class="divider-custom-line"></div>
 
         </div>
     </header>
@@ -126,11 +134,11 @@
     </section>
 
     <!-- About Section -->
-    <section class="page-section bg-primary text-white mb-0" id="about">
+    <section class="page-section bg-primary text-white mb-5" id="about">
         <div class="container">
 
             <!-- About Section Heading -->
-            <h2 class="page-section-heading text-center text-uppercase text-white">About</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-white">Qui suis-je ?</h2>
 
             <!-- Icon Divider -->
             <div class="divider-custom divider-light">
@@ -144,16 +152,21 @@
             <!-- About Section Content -->
             <div class="row">
                 <div class="col-lg-4 ml-auto">
-                    <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p>
+                    <p class="lead">Diplômé en Génie logiciel et sécurité des TIC en fin 2014, ma curiosité
+                        et mon envie d'explorer m'ont conduit à travailler en tant que gérant d'une boulangerie, puis
+                        d'une boutique d'informatique et en tant qu'agent commercial.
+                        </p>
                 </div>
                 <div class="col-lg-4 mr-auto">
-                    <p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p>
+                    <p class="lead">Riche de ces belles expériences, à partir de février/mars 2016, je décide de me
+                        consacrer à mon domaine de prédilection : le développement web. Et depuis je prend beaucoup de plaisir dans le
+                        monde du web.</p>
                 </div>
             </div>
 
             <!-- About Section Button -->
             <div class="text-center mt-4">
-                <a class="btn btn-xl btn-outline-light" href="../#">
+                <a class="btn btn-xl btn-outline-light" href="../public/cv_Assane_Thione_Ba.pdf" target="_blank">
                     <i class="fas fa-download mr-2"></i>
                     Voir mon CV
                 </a>
@@ -162,12 +175,55 @@
         </div>
     </section>
 
+
+    <!-- Blog Section -->
+    <section class="page-section">
+        <div class="container-fluid row">
+            <div class="col-md-4 blog-home">
+                <h2 class="page-section-heading text-center text-uppercase mb-4">Le blog</h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis purus vitae mollis sagittis.
+                    Nulla vulputate posuere ligula. Etiam mollis tortor leo, pretium volutpat diam malesuada vel. Cras
+                    sit amet mi egestas, dictum elit commodo, cursus mi...</p>
+            </div>
+            <div class="cards-post col-md-8 col-sm-12">
+                <div class="card-post">
+                    <h2><a href="#">Title</a></h2>
+                    <p>Some article description stuff.</p>
+                </div>
+                <div class="card-post">
+                    <h2><a href="#">Title</a></h2>
+                    <p>Some article description stuff.</p>
+                </div>
+                <div class="card-post">
+                    <h2><a href="#">Title</a></h2>
+                    <p>Some article description stuff.</p>
+                </div>
+                <div class="card-post">
+                    <h2><a href="#">Title</a></h2>
+                    <p>Some article description stuff.</p>
+                </div>
+                <div class="card-post">
+                    <h2><a href="#">Title</a></h2>
+                    <p>Some article description stuff.</p>
+                </div>
+                <div class="card-post">
+                    <h2><a href="#">Title</a></h2>
+                    <p>Some article description stuff.</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+        <a href="#" class="btn btn-primary btn-lg">Aller à la page du blog</a>
+        </div>
+    </section>
+    <!-- / Blog Section -->
+
     <!-- Contact Section -->
     <section class="page-section" id="contact">
         <div class="container">
 
             <!-- Contact Section Heading -->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contactez-moi</h2>
 
             <!-- Icon Divider -->
             <div class="divider-custom">
@@ -185,29 +241,29 @@
                     <form name="sentMessage" id="contactForm" novalidate="novalidate">
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                <label>Name</label>
-                                <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name.">
+                                <label>Nom</label>
+                                <input class="form-control" id="name" type="text" placeholder="Prénom(s) et nom" required="required" data-validation-required-message="Veuillez renseigner votre nom">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                <label>Email Address</label>
-                                <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address.">
+                                <label>Email</label>
+                                <input class="form-control" id="email" type="email" placeholder="Email" required="required" data-validation-required-message="Veuillez renseigner votre email">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                <label>Phone Number</label>
-                                <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number.">
+                                <label>Téléphone</label>
+                                <input class="form-control" id="phone" type="tel" placeholder="Numéro de téléphone" required="required" data-validation-required-message="Veuillez renseigner votre numéro">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Message</label>
-                                <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Please enter a message."></textarea>
+                                <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Veuillez renseigner votre message"></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -224,3 +280,11 @@
     </section>
 {% endblock %}
 
+{% block movingbackground %}
+
+    <script src="../public/js/moving-background/three.r92.min.js"></script>
+    <script src="../public/js/moving-background/vanta.net.min.js"></script>
+    <script> VANTA.NET({ el: "#moving-background", color: 0x3fff8e, backgroundColor: 0x14286b,
+            points: 11.00, maxDistance: 25.00, spacing: 18.00 }) </script>
+
+{% endblock %}

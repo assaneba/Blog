@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- Theme CSS -->
-    <link href="../public/css/freelancer.min.css" rel="stylesheet">
+    <link href="../public/css/freelancer.css" rel="stylesheet">
 
 </head>
 
@@ -38,7 +38,7 @@
                     <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../#portfolio">Portfolio</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../#about">About</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../#about">à propos</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../#contact">Contact</a>
@@ -51,8 +51,9 @@
     </div>
 </nav>
 
-{% block Content %} {% endblock %}
-</body>
+{% block Content %}
+{% endblock %}
+
 
 <!-- Footer -->
 <footer class="footer text-center">
@@ -69,25 +70,27 @@
             <!-- Footer Social Icons -->
             <div class="col-lg-4 mb-5 mb-lg-0">
                 <h4 class="text-uppercase mb-4">Sur les réseaux</h4>
-                <a class="btn btn-outline-light btn-social mx-1" href="#">
-                    <i class="fab fa-fw fa-facebook-f"></i>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/assaneba/" target="_blank">
+                    <i class="fab fa-fw fa-github"></i>
                 </a>
-                <a class="btn btn-outline-light btn-social mx-1" href="#">
+                <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/assanetba" target="_blank">
                     <i class="fab fa-fw fa-twitter"></i>
                 </a>
-                <a class="btn btn-outline-light btn-social mx-1" href="#">
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/assane-ba/" target="_blank">
                     <i class="fab fa-fw fa-linkedin-in"></i>
                 </a>
-                <a class="btn btn-outline-light btn-social mx-1" href="#">
-                    <i class="fab fa-fw fa-dribbble"></i>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/alhassan_crow/" target="_blank">
+                    <i class="fab fa-fw fa-instagram"></i>
                 </a>
             </div>
 
             <!-- Footer About Text -->
             <div class="col-lg-4">
-                <h4 class="text-uppercase mb-4">Menu</h4>
-                <p class="lead mb-0">Freelance is a free to use, MIT licensed Bootstrap theme created by</p>
-                <p class="lead mb-0"><a href="../#">Connexion</a>.</p>
+                <h4 class="text-uppercase mb-4">Joignez-vous à nous</h4>
+                <p class="lead mb-0">Hey ! Inscrivez-vous ou connectez-vous pour commenter les articles sur le blog et
+                    avoir accès à du contenu inédit :)
+                </p>
+                <p class="lead mb-0"><a href="../#">Je m'inscris ! </a>&nbsp;- &nbsp;<a href="../#">Me connecter</a></p>
             </div>
 
         </div>
@@ -357,6 +360,8 @@
 
 <!-- Custom scripts for this template -->
 <script src="../public/js/freelancer.min.js"></script>
+
+{% block movingbackground %} {% endblock %}
 
 </body>
 
