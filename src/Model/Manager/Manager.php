@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Manager;
+namespace Model\Manager;
 
 use Exception;
 use PDO;

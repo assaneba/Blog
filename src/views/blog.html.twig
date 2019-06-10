@@ -31,71 +31,22 @@
         <div class="container">
             <div class="row">
                 <div class="card-columns">
-                    <div class="card mb-5">
-                            <img src="../public/img/mon-avatar.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                            <div class="text-center">
-                                <a href="#" class="btn btn-primary btn-block">Voir l'article</a>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Dernière modification 7/06/2019</small>
-                            </div>
-                    </div>
-                    <div class="card mb-5">
-                        <img src="../public/img/mon-avatar.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    {% for post in posts %}
+                        <div class="card mb-5">
+                                <img src="../public/img/mon-avatar.png" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-text"> {{ post.lead }}</p>
+                                </div>
+                                <div class="text-center">
+                                    <a href="../blog/article/{{ post.idpost }}" class="btn btn-primary btn-block">Voir l'article</a>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Dernière modification {{ post.date_creation|date("d/m/Y") }}</small>
+                                </div>
                         </div>
-                        <div class="text-center">
-                            <a href="#" class="btn btn-primary btn-block">Voir l'article</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Dernière modification 7/06/2019</small>
-                        </div>
-                    </div>
-                    <div class="card mb-5">
-                        <img src="../public/img/mon-avatar.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                        <div class="text-center">
-                            <a href="#" class="btn btn-primary btn-block">Voir l'article</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Dernière modification 7/06/2019</small>
-                        </div>
-                    </div>
-                    <div class="card mb-5">
-                        <img src="../public/img/mon-avatar.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                        <div class="text-center">
-                            <a href="#" class="btn btn-primary btn-block">Voir l'article</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Dernière modification 7/06/2019</small>
-                        </div>
-                    </div>
-                    <div class="card mb-5">
-                        <img src="../public/img/mon-avatar.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Post title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                        <div class="text-center">
-                            <a href="#" class="btn btn-primary btn-block">Voir l'article</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Dernière modification 7/06/2019</small>
-                        </div>
-                    </div>
+                    {% endfor %}
 
                 </div>
             </div>

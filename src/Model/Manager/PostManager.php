@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Manager;
+namespace Model\Manager;
 
 require_once __DIR__.'/../../../config/dbconfig.php';
 
