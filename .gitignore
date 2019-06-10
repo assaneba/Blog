@@ -1,0 +1,8 @@
+vendor/
+.idea/
+.DS_Store
+src/.DS_Store
+src/Model/.DS_Store
+public/.DS_Store
+config/DS_Store
+css
