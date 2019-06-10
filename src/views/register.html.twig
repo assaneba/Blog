@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Blog pro de Assane Thione Ba">
+    <meta name="author" content="Assane Thione Ba">
+
+    <title>Connectez-vous</title>
+
+    {# We put base to /Blog/public because of the url rewritting in .htaccess wich point there #}
+    <base href="/blog/public/">
+
+    <!-- Custom fonts for this theme -->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Theme CSS -->
+    <link href="../public/css/freelancer.css" rel="stylesheet">
+    <link href="../public/css/sign-in.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card card-signin flex-row my-5">
+                <div class="d-none d-md-flex card-img-left" id="moving-background">
+                    <!-- Background image for card set in CSS! -->
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">S'inscrire</h5>
+                    <form class="form-signin">
+                        <div class="form-label-group">
+                            <input type="text" id="inputUserame" class="form-control" placeholder="Pseudo" required autofocus>
+                            <label for="inputUserame">Pseudo</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="text" id="inputUserame" class="form-control" placeholder="Prénom(s)" required autofocus>
+                            <label for="inputUserame">Prénom(s)</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="text" id="inputUserame" class="form-control" placeholder="Nom" required autofocus>
+                            <label for="inputUserame">Nom</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="email" id="inputEmail" class="form-control" placeholder="Email" required>
+                            <label for="inputEmail">Email</label>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-label-group">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <label for="inputPassword">Password</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
+                            <label for="inputConfirmPassword">Confirm password</label>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">S'inscrire</button>
+                        <a class="d-block text-center mt-2 small" href="login.html.twig">Déjà membre ? Connectez-vous</a>
+                        <hr class="my-4">
+                        <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
+                        <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="../public/js/moving-background/three.r92.min.js"></script>
+<script src="../public/js/moving-background/vanta.net.min.js"></script>
+<script> VANTA.NET({ el: "#moving-background", color: 0x3fff8e, backgroundColor: 0x14286b,
+        points: 11.00, maxDistance: 25.00, spacing: 18.00 }) </script>
+
+</html>

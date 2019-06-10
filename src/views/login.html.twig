@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Blog pro de Assane Thione Ba">
+    <meta name="author" content="Assane Thione Ba">
+
+    <title>Connectez-vous</title>
+
+    {# We put base to /Blog/public because of the url rewritting in .htaccess wich point there #}
+    <base href="/blog/public/">
+
+    <!-- Custom fonts for this theme -->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Theme CSS -->
+    <link href="../public/css/freelancer.css" rel="stylesheet">
+    <link href="../public/css/sign-in.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="d-none d-md-flex col-md-4 col-lg-6" id="moving-background"> </div>
+        <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-8 mx-auto">
+                            <h3 class="login-heading mb-4">Content de vous revoir !</h3>
+                            <form>
+                                <div class="form-label-group">
+                                    <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                                    <label for="inputEmail">Email</label>
+                                </div>
+
+                                <div class="form-label-group">
+                                    <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+                                    <label for="inputPassword">Mot de passe</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Se souvenir de moi</label>
+                                </div>
+                                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Connexion</button>
+                                <div class="text-center">
+                                    <a class="small" href="#">Mot de passe oublié ?</a></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+    <script src="../public/js/moving-background/three.r92.min.js"></script>
+    <script src="../public/js/moving-background/vanta.net.min.js"></script>
+    <script> VANTA.NET({ el: "#moving-background", color: 0x3fff8e, backgroundColor: 0x14286b,
+            points: 11.00, maxDistance: 25.00, spacing: 18.00 }) </script>
+
+</html>
