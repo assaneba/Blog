@@ -31,4 +31,29 @@ class AdminController extends Controller
         }
     }
 
+    public function register() {
+
+        if($_POST['password'] == $_POST['confirmPassword']) {
+            //echo 'Cool password correspond';
+            $user = new UserManager();
+            $emailAlreadyTaken = $user->checkEmail($_POST['email']);
+            $loginAlreadyTaken = $user->checkLogin($_POST['pseudo']);
+            if($emailAlreadyTaken) {
+                echo 'Erreur l\'email est déjà utilisé <br>';
+
+            } elseif ($loginAlreadyTaken) {
+                echo 'Erreur ce pseudo est déjà pris';
+            }
+            else {
+                $user->addUser($_POST['pseudo'], $_POST['password'], $_POST['firstName'], $_POST['lastName'],
+                                        $_POST['email']);
+                echo 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
+
+            }
+        } else {
+            echo 'Erreur Les passwords ne correspondent pas';
+        }
+
+    }
+
 }
