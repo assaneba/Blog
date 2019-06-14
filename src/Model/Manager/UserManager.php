@@ -53,13 +53,14 @@ class UserManager extends Manager
         $db = $this->connectToDB();
         $req = $db->prepare("INSERT INTO user (login, password, first_name, last_name, email, user_role)
                                         VALUES (:login, :password, :first_name, :last_name, :email, 'ROLE_USER')");
-        $req->execute(array(
+        $result = $req->execute(array(
             'login' => $login,
             'password' => $password,
             'first_name' => $firstName,
             'last_name' => $lastName,
             'email' => $email
         ));
+        return $result;
 
     }
 

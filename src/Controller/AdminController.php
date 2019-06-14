@@ -13,24 +13,51 @@ class AdminController extends Controller
         echo 'Page accueil dashbord';
     }
 
+    /**
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function login()
     {
 
         if(isset($_POST['email']) && isset($_POST['password'])) {
             //echo $this->twig->render('login.html.twig');
-            $user = new UserManager();
-            $user = $user->getUser($_POST['email'], $_POST['password']);
+            $checkUser = new UserManager();
+            $user = $checkUser->getUser($_POST['email'], $_POST['password']);
             if($user->getIdUser() == NULL ) {
-                echo 'Erreur Valeur inexistante';
+                echo 'Erreur User inexistante';
             } else {
-                echo 'Super valeur existe !';
-                //echo $this->twig->render('admin/dashbord.html.twig');
+                /**
+                 * Here is the case where user exists
+                 * We check if the user is admin or simple user
+                 */
+                if($user->getUserRole() == 'ROLE_ADMIN') {
+                    echo 'Page d\'admin';
+                    //echo $this->twig->render('admin/dashbord.html.twig');
+                }
+                else {
+                    //On initialise les variables de session avec l'objet $user
+                    $_SESSION = $user;
+                    echo $this->twig->render('home.html.twig',
+                        array(
+                            'session' => $_SESSION
+                        ));
+                }
             }
-        } else {
+        }
+        else {
             echo $this->twig->render('login.html.twig');
         }
     }
 
+
+    /**
+     * First if condition test if the passwords set match
+     * In Second if condition
+        * We check if at first if the email or login is already exists in the database.
+        * If not we call addUser() function which add a new user
+     */
     public function register() {
 
         if($_POST['password'] == $_POST['confirmPassword']) {
@@ -45,9 +72,11 @@ class AdminController extends Controller
                 echo 'Erreur ce pseudo est déjà pris';
             }
             else {
-                $user->addUser($_POST['pseudo'], $_POST['password'], $_POST['firstName'], $_POST['lastName'],
+                $userAddSucceed = $user->addUser($_POST['pseudo'], $_POST['password'], $_POST['firstName'], $_POST['lastName'],
                                         $_POST['email']);
-                echo 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
+                if($userAddSucceed) {
+                    echo 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
+                }
 
             }
         } else {
