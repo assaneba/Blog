@@ -24,22 +24,33 @@ class BlogController extends Controller
 
     }
 
-    public function article($idpost) {
+    public function article($idPost) {
         //echo 'Voir un article '. $params;
         $post = new PostManager();
-        $post = $post->getOne($idpost);
-        echo $this->twig->render('article.html.twig',
-            array(
-                'post' => $post
-            )
-            );
+        $post = $post->getOne($idPost);
+        $comments = new CommentManager();
+        $comments = $comments->getComments($idPost);
+        //var_dump($comments);
+        if($post) {
+            if(!$comments) {
+                //echo 'Aucun commentaire';
+                $comments = NULL;
+            }
+            echo $this->twig->render('article.html.twig',
+                array(
+                    'post' => $post,
+                    'comments' => $comments
+                ));
+        } else {
+            echo 'Erreur 404 : post non trouvé';
+        }
 
     }
 
     /**
      * @param $idPost
      * @var $idPost = id of the related post
-     * @var $_POST['commentComment'] = content of the comment to add
+     * @var $_POST['commentContent'] = content of the comment to add
      * @var $_SESSION['userIduser'] = content the id of the user which did the comment
      */
     public function addComment($postIdpost) {

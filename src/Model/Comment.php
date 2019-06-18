@@ -11,7 +11,19 @@ class Comment
     private $dateLastModif;
     private $content;
     private $published;
-    private $post;
+    private $postIdPost;
+    private $userIdUser;
+
+    public function __construct($inputs) {
+        $this->setIdComment($inputs->idcomment);
+        $this->setDateComment($inputs->date_comment);
+        $this->setDateLastModif($inputs->date_last_modif);
+        $this->setContent($inputs->content);
+        $this->setPublished($inputs->published);
+        $this->setPostIdPost($inputs->post_idpost);
+        $this->setUserIdUser($inputs->user_iduser);
+
+    }
 
     /**
      * @return mixed
@@ -106,22 +118,38 @@ class Comment
     /**
      * @return mixed
      */
-    public function getPost()
+    public function getPostIdPost()
     {
-        return $this->post;
+        return $this->postIdPost;
     }
 
     /**
-     * @param mixed $post
+     * @param mixed $postIdPost
      * @return Comment
      */
-    public function setPost($post)
+    public function setPostIdPost($postIdPost)
     {
-        $this->post = $post;
+        $this->postIdPost = $postIdPost;
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUserIdUser()
+    {
+        return $this->userIdUser;
+    }
 
+    /**
+     * @param mixed $userIdUser
+     * @return Comment
+     */
+    public function setUserIdUser($userIdUser)
+    {
+        $this->userIdUser = $userIdUser;
+        return $this;
+    }
 
 
 }

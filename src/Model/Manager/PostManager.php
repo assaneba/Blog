@@ -14,7 +14,12 @@ class PostManager extends Manager
         $q = $db->prepare('SELECT idpost, title, lead, content, date_creation, post_public, date_planned, user_iduser FROM post WHERE idpost=:id');
         $q->execute([':id' => $idpost]);
         $inputs = $q->fetchObject();
-        return new Post($inputs);
+        if($inputs) {
+            return new Post($inputs);
+        }
+        else {
+            return false;
+        }
     }
 
     public function getAllPublic() {
