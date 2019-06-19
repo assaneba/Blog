@@ -26,6 +26,7 @@ class BlogController extends Controller
 
     public function article($idPost) {
         //echo 'Voir un article '. $params;
+        $_SESSION['userIduser'] = 2;
         $post = new PostManager();
         $post = $post->getOne($idPost);
         $comments = new CommentManager();
@@ -39,7 +40,8 @@ class BlogController extends Controller
             echo $this->twig->render('article.html.twig',
                 array(
                     'post' => $post,
-                    'comments' => $comments
+                    'comments' => $comments,
+                    'session' => $_SESSION
                 ));
         } else {
             echo 'Erreur 404 : post non trouvé';
@@ -68,6 +70,36 @@ class BlogController extends Controller
         }
         else {
             echo 'Veuillez vous authentifier pour commenter';
+        }
+
+    }
+
+    public function editComment($idComment) {
+        echo 'Editer un commentaire <br> avec l\' id : ';
+        var_dump($idComment);
+/*        $_POST['commentContent'];
+        if(isset($_SESSION['userIduser'])) {
+            $comment = new CommentManager();
+            $editCommentSucceed = $comment->editComment($_POST['commentContent'], $postIdpost, $_SESSION['userIduser']);
+            if ($editCommentSucceed) {
+                echo 'Votre commentaire a été bien enrégistré ! <a href="../blog/article/2"> Retour </a>';
+            } else {
+                echo 'Erreur commentaire non modifié ';
+            }
+        }
+        else {
+            echo 'Veuillez vous authentifier pour commenter';
+        }*/
+
+    }
+
+    public function deleteComment($idComment) {
+        $comment = new CommentManager();
+        $response = $comment->deleteComment($idComment);
+        if($response) {
+            echo 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
+        } else {
+            echo 'Erreur, impossible de supprimer ce commentaire <a href="../blog/article/2">Retour</a>';
         }
 
     }

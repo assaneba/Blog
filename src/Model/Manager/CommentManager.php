@@ -22,9 +22,14 @@ class CommentManager extends Manager
 
     }
 
+    /**
+     * @param $idPost
+     * Get comments elements and users elements as author names and their Ids
+     * @return array
+     */
     public function getComments($idPost) {
         $db = $this->connectToDB();
-        $req = $db->prepare('SELECT date_last_modif, content, first_name, last_name  FROM comment
+        $req = $db->prepare('SELECT idcomment, date_last_modif, content, user_iduser, first_name, last_name  FROM comment
                                         INNER JOIN user ON user.iduser = comment.user_iduser WHERE post_idpost = :idPost
                                          ORDER BY date_last_modif DESC ');
         $req->execute(array(
@@ -32,6 +37,24 @@ class CommentManager extends Manager
         ));
         $result = $req->fetchAll();
         return $result;
+
+    }
+
+    public function editComment($idComment) {
+        $db = $this->connectToDB();
+        //var_dump($idComment);
+        //$req = $db->prepare('');
+
+    }
+
+    public function deleteComment($idComment)
+    {
+        $db = $this->connectToDB();
+        $req = $db->prepare('DELETE FROM comment WHERE idcomment = :idComment');
+        $response = $req->execute(array(
+            ':idComment' => $idComment
+        ));
+        return $response;
 
     }
 }
