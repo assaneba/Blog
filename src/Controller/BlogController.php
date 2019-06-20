@@ -74,22 +74,23 @@ class BlogController extends Controller
 
     }
 
-    public function editComment($idComment) {
-        echo 'Editer un commentaire <br> avec l\' id : ';
-        var_dump($idComment);
-/*        $_POST['commentContent'];
-        if(isset($_SESSION['userIduser'])) {
+    public function editComment($commentId) {
+        $jsonTab = array();
+        $jsonTab['message'] = 'Edition de commentaire avec json';
+        //echo 'Editer un commentaire <br> avec l\' id : '. $commentId;
+        if(isset($_POST['newComment'])) {
             $comment = new CommentManager();
-            $editCommentSucceed = $comment->editComment($_POST['commentContent'], $postIdpost, $_SESSION['userIduser']);
+            $editCommentSucceed = $comment->editComment($_POST['newComment'], $commentId);
             if ($editCommentSucceed) {
-                echo 'Votre commentaire a été bien enrégistré ! <a href="../blog/article/2"> Retour </a>';
+                $jsonTab['message'] = 'Votre commentaire a été bien modifié !';
             } else {
-                echo 'Erreur commentaire non modifié ';
+                $jsonTab['message'] = "Erreur commentaire non modifié";
             }
         }
         else {
-            echo 'Veuillez vous authentifier pour commenter';
-        }*/
+            $jsonTab['message'] = 'Veuillez vous authentifier pour commenter';
+        }
+        echo json_encode($jsonTab);
 
     }
 

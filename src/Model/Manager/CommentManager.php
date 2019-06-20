@@ -40,10 +40,16 @@ class CommentManager extends Manager
 
     }
 
-    public function editComment($idComment) {
+    public function editComment($content, $commentId) {
         $db = $this->connectToDB();
-        //var_dump($idComment);
-        //$req = $db->prepare('');
+        $req = $db->prepare('UPDATE comment SET date_last_modif = NOW(), content = :content WHERE idcomment = :commentId');
+        $result = $req->execute(array(
+            'content' => $content,
+            'commentId' => $commentId
+        ));
+        // $result return true if query success
+        return $result;
+        //return true;
 
     }
 
@@ -51,10 +57,10 @@ class CommentManager extends Manager
     {
         $db = $this->connectToDB();
         $req = $db->prepare('DELETE FROM comment WHERE idcomment = :idComment');
-        $response = $req->execute(array(
+       /* $response = $req->execute(array(
             ':idComment' => $idComment
-        ));
-        return $response;
+        ));*/
+       // return $response;
 
     }
 }
