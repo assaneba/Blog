@@ -24,22 +24,35 @@ class BlogController extends Controller
 
     }
 
-    public function article($idpost) {
+    public function article($idPost) {
         //echo 'Voir un article '. $params;
+        $_SESSION['userIduser'] = 2;
         $post = new PostManager();
-        $post = $post->getOne($idpost);
-        echo $this->twig->render('article.html.twig',
-            array(
-                'post' => $post
-            )
-            );
+        $post = $post->getOne($idPost);
+        $comments = new CommentManager();
+        $comments = $comments->getComments($idPost);
+        //var_dump($comments);
+        if($post) {
+            if(!$comments) {
+                //echo 'Aucun commentaire';
+                $comments = NULL;
+            }
+            echo $this->twig->render('article.html.twig',
+                array(
+                    'post' => $post,
+                    'comments' => $comments,
+                    'session' => $_SESSION
+                ));
+        } else {
+            echo 'Erreur 404 : post non trouvé';
+        }
 
     }
 
     /**
      * @param $idPost
      * @var $idPost = id of the related post
-     * @var $_POST['commentComment'] = content of the comment to add
+     * @var $_POST['commentContent'] = content of the comment to add
      * @var $_SESSION['userIduser'] = content the id of the user which did the comment
      */
     public function addComment($postIdpost) {
@@ -57,6 +70,37 @@ class BlogController extends Controller
         }
         else {
             echo 'Veuillez vous authentifier pour commenter';
+        }
+
+    }
+
+    public function editComment($commentId) {
+        $jsonTab = array();
+        $jsonTab['message'] = 'Edition de commentaire avec json';
+        //echo 'Editer un commentaire <br> avec l\' id : '. $commentId;
+        if(isset($_POST['newComment'])) {
+            $comment = new CommentManager();
+            $editCommentSucceed = $comment->editComment($_POST['newComment'], $commentId);
+            if ($editCommentSucceed) {
+                $jsonTab['message'] = 'Votre commentaire a été bien modifié !';
+            } else {
+                $jsonTab['message'] = "Erreur commentaire non modifié";
+            }
+        }
+        else {
+            $jsonTab['message'] = 'Veuillez vous authentifier pour commenter';
+        }
+        echo json_encode($jsonTab);
+
+    }
+
+    public function deleteComment($idComment) {
+        $comment = new CommentManager();
+        $response = $comment->deleteComment($idComment);
+        if($response) {
+            echo 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
+        } else {
+            echo 'Erreur, impossible de supprimer ce commentaire <a href="../blog/article/2">Retour</a>';
         }
 
     }

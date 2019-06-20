@@ -2,7 +2,6 @@
 {% block title Article %}
 {% block Content %}
 
-
     <!-- Page Content -->
 
     <div class="container">
@@ -66,14 +65,29 @@
                     </div>
                 </div>
 
-                <!-- Single Comment -->
+                <!--Database Comments -->
+                {% for comment in comments %}
                 <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                     <div class="media-body">
-                        <h5 class="mt-0">Commenter Name</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        <h5 class="mt-0">{{comment.first_name~' '~comment.last_name }}</h5>
+                        <div class="commentContent">{{ comment.content }}</div>
+                        <div class="mt-2 card-footer float-right">
+                            Date dernière modif : {{ comment.date_last_modif|date('d/m/Y à h:m') }}
+                        </div>
+                        {% if session.userIduser and session.userIduser == comment.user_iduser %}
+                        <div class="mt-2 card-footer float-left">
+                            <a id="editComment" class="btn btn-outline-dark">Modifier</a>
+                            <a href="../blog/deleteComment/{{ comment.idcomment }}" class="btn btn-outline-danger">Supprimer</a>
+                            <input id="indice" type="hidden" value="{{ i }}">
+                            <input type="hidden" id="idComment" value="{{ comment.idcomment }}">
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
+                    {% set i = i + 1 %}
+                {% endfor %}
+
 
                 <!-- Comment with nested comments -->
                 <div class="media mb-4">
@@ -173,4 +187,43 @@
     </div>
     <!-- /.container -->
 
+{% endblock %}
+{% block EditComment %}
+<!-- Edit comments -->
+    <script type="text/javascript">
+        /* On click of the Modifer bouton for a registered user */
+        $(document).ready(function () {
+            $("#editComment").click(function () {
+                $("#editComment").fadeOut();
+                var comment;
+                // Contains the value of the key of comment on the dynamic list of comments
+                var i = $("#indice").val();
+                /* Contains the id of the corresponding id of comment in database*/
+                var idComment = $("#idComment").val();
+                comment = $(".commentContent").eq(i).text();
+                comment = $(".commentContent").eq(i).replaceWith(
+                    '<form method="post" action="../blog/editComment/'+ idComment +'" id="editComment2">\n' +
+                    '   <div class="form-group">\n' +
+                    '   <textarea name="commentContent" class="form-control" rows="3">' + comment + '</textarea>\n' +
+                    '   </div>\n' +
+                    '   <button type="submit" class="btn btn-primary float-right">Mettre à jour</button>\n' +
+                    '   </form>'
+                );
+                /* On click on Mettre à jour bouton for updating user comment */
+                $(function () {
+                    $("#editComment2").submit(function () {
+                        newComment = $(this).find("textarea[name=commentContent]").val();
+                        url = $(this).attr("action");
+                        $.post(url, {newComment:newComment}, function (data) {
+                                $("#editComment2").fadeOut();
+                                alert(data.message);
+                        },"json");
+                        //alert(url);
+                        return false;
+                    })
+                })
+                //alert(comment.text());
+            });
+        });
+    </script>
 {% endblock %}
