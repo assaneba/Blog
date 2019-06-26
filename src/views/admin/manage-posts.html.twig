@@ -1,0 +1,41 @@
+{% extends "admin/dashbord-layout.html.twig" %}
+{% block title %} Manage posts {% endblock %}
+{% block Content %}
+    <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800 mr-5">Les articles</h1>
+        <div class="mb-2">
+            <a href="#" class="btn btn-primary btn-lg">Ajouter un post</a>
+        </div>
+         <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Ls articles</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Chapeau</th>
+                            <th>Date de création</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for post in posts %}
+                        <tr>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.lead }}</td>
+                            <td>{{ post.date_creation|date("d/m/Y à g:ia") }}</td>
+                            <td><a href="../admin/editPost/{{ post.idpost }}" class="btn btn-primary" >Modifier</a></td>
+                            <td><a href="../admin/deletePost/{{ post.idpost }}" class="btn btn-danger">Supprimer</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+{% endblock %}

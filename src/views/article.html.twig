@@ -1,5 +1,5 @@
 {% extends "layout.html.twig" %}
-{% block title Article %}
+{% block title %} Article {% endblock %}
 {% block Content %}
 
     <!-- Page Content -->
@@ -67,7 +67,7 @@
 
                 <!--Database Comments -->
                 {% for comment in comments %}
-                <div class="media mb-4">
+                <div class="media mb-4" id="databaseComments">
                     <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                     <div class="media-body">
                         <h5 class="mt-0">{{comment.first_name~' '~comment.last_name }}</h5>
@@ -88,32 +88,6 @@
                     {% set i = i + 1 %}
                 {% endfor %}
 
-
-                <!-- Comment with nested comments -->
-                <div class="media mb-4">
-                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                    <div class="media-body">
-                        <h5 class="mt-0">Commenter Name</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-                        <div class="media mt-4">
-                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                            <div class="media-body">
-                                <h5 class="mt-0">Commenter Name</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
-
-                        <div class="media mt-4">
-                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                            <div class="media-body">
-                                <h5 class="mt-0">Commenter Name</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </section>
 
             </div>
@@ -201,7 +175,7 @@
                 /* Contains the id of the corresponding id of comment in database*/
                 var idComment = $("#idComment").val();
                 comment = $(".commentContent").eq(i).text();
-                comment = $(".commentContent").eq(i).replaceWith(
+                $(".commentContent").eq(i).replaceWith(
                     '<form method="post" action="../blog/editComment/'+ idComment +'" id="editComment2">\n' +
                     '   <div class="form-group">\n' +
                     '   <textarea name="commentContent" class="form-control" rows="3">' + comment + '</textarea>\n' +
@@ -211,18 +185,28 @@
                 );
                 /* On click on Mettre à jour bouton for updating user comment */
                 $(function () {
-                    $("#editComment2").submit(function () {
-                        newComment = $(this).find("textarea[name=commentContent]").val();
-                        url = $(this).attr("action");
-                        $.post(url, {newComment:newComment}, function (data) {
-                                $("#editComment2").fadeOut();
-                                alert(data.message);
-                        },"json");
-                        //alert(url);
-                        return false;
-                    })
+                        $("#editComment2").submit(function () {
+                            newComment = $(this).find("textarea[name=commentContent]").val();
+                            url = $(this).attr("action");
+                            $.post(url, {newComment:newComment}, function (data) {
+                                if (data.success == true) {
+                                    alert(data.message);
+                                    $("#editComment2").html('<div class="commentContent">' + data.newComment + '</div>');
+                                    $("#editComment").fadeIn();
+                                    return false;
+                                    //$(".commentContent").eq(i).html('<div class="commentContent">test it</div>');
+                                    //data.newComment;
+                                } else {
+                                    alert(data.message);
+                                    return false;
+                                }
+
+                            }, "json");
+                            //alert(url);
+                            return false;
+                        })
                 })
-                //alert(comment.text());
+                //$(comment.text()).fadeIn();
             });
         });
     </script>

@@ -4,13 +4,27 @@ namespace Controller;
 
 session_start();
 
+use Model\Manager\PostManager;
 use Model\Manager\UserManager;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        echo 'Page accueil dashbord';
+        $_SESSION['admin'] = true;
+        /**
+        Test if the user have the rights to access admin dashbord, else we redirect to home
+         */
+        if($_SESSION['admin']) {
+            $posts = new PostManager();
+            $posts = $posts->getAllPublic();
+            echo $this->twig->render('admin/manage-posts.html.twig', array(
+                'posts' => $posts
+            ));
+        } else {
+            echo $this->twig->render('home.html.twig');
+        }
+
     }
 
     /**
@@ -83,6 +97,15 @@ class AdminController extends Controller
             echo 'Erreur Les passwords ne correspondent pas';
         }
 
+    }
+
+    public function editPost($idPost) {
+        echo 'edit post '. $idPost;
+
+    }
+
+    public function deletePost($idPost) {
+        echo 'Delete post '. $idPost;
     }
 
 }
