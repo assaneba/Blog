@@ -112,7 +112,17 @@ class AdminController extends Controller
     }
 
     public function editPost($idPost) {
-        echo 'edit post '. $idPost;
+        //echo 'edit post '. $idPost;
+        $post = new PostManager();
+        $post = $post->getOne($idPost);
+        $category = new CategoryManager();
+        $postCategory = $category->getCategory($idPost);
+        $categories = $category->getCategories();
+        echo $this->twig->render('admin/modify-post.html.twig', array(
+            'post' => $post,
+            'postCategory' => $postCategory,
+            'categories' => $categories
+        ));
 
     }
 
@@ -128,7 +138,6 @@ class AdminController extends Controller
         $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
         $lead = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
         $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
-        var_dump($idCategory);
         if(!empty($title) && !empty($idCategory) && !empty($lead) && !empty($content)) {
             //echo 'ok all Good';
             $postMan = new PostManager();
@@ -141,6 +150,27 @@ class AdminController extends Controller
             echo 'erreur tous les champs ne sont pas remplis';
         }
         //print_r($_POST);
+    }
+
+    /**
+     * After submitting to update post
+     */
+    public function submitUpdatePost() {
+        $idPost = filter_input(INPUT_POST, 'idPost', FILTER_SANITIZE_NUMBER_INT);
+        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+        $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
+        $lead = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
+        $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+        if(!empty($title) && !empty($idCategory) && !empty($lead) && !empty($content)) {
+            $postMan = new PostManager();
+            $newPostIsSaved = $postMan->UpdatePost($idPost, $title, $idCategory, $lead, $content);
+            if ($newPostIsSaved) {
+                //echo 'Post bien mis à jour ! ';
+                $this->index();
+            }
+        } else {
+            echo 'Erreur : certains champs ne sont pas remplis';
+        }
     }
 
 }

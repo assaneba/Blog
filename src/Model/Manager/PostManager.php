@@ -50,4 +50,25 @@ class PostManager extends Manager
             }
         }
     }
+
+    public function updatePost($idPost, $title, $idCategory, $lead, $content) {
+        $db = $this->connectToDB();
+        $insertInPost = $db->prepare('UPDATE post SET title = ?, lead = ?, content = ?, date_creation = NOW()
+                                                WHERE idpost = ?');
+        $insertInPost->bindParam(1, $title);
+        $insertInPost->bindParam(2, $lead);
+        $insertInPost->bindParam(3, $content);
+        $insertInPost->bindParam(4, $idPost);
+        if($insertInPost->execute()){
+            //$idPost = $db->lastInsertId() ;
+            $insertInCategoryHasPost = $db->prepare('UPDATE category_has_post SET category_idcategory = ?
+                                                                 WHERE post_idpost = ? ');
+            $insertInCategoryHasPost->bindParam(1, $idCategory);
+            $insertInCategoryHasPost->bindParam(2, $idPost);
+            if($insertInCategoryHasPost->execute()){
+                //echo 'Super les deux requetes ont été bien mises à jour !';
+                return true;
+            }
+        }
+    }
 }
