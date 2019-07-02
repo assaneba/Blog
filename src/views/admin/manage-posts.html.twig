@@ -9,7 +9,7 @@
          <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Ls articles</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Les articles</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -25,12 +25,15 @@
                         </thead>
                         <tbody>
                         {% for post in posts %}
-                        <tr>
+                        <tr id="{{ post.idpost }}">
                             <td>{{ post.title }}</td>
                             <td>{{ post.lead }}</td>
                             <td>{{ post.date_creation|date("d/m/Y à g:ia") }}</td>
                             <td><a href="../admin/editPost/{{ post.idpost }}" class="btn btn-primary" >Modifier</a></td>
-                            <td><a href="../admin/deletePost/{{ post.idpost }}" class="btn btn-danger">Supprimer</a></td>
+                            <td><button class="btn btn-danger" id="{{ post.idpost }}" data-action="delete"
+                                        data-target="#deletePost" data-toggle="modal">
+                                    Supprimer</button>
+                            </td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -38,4 +41,37 @@
                 </div>
             </div>
         </div>
+{% endblock %}
+
+{% block deletePost %}
+    <!-- Modal - Delete a post -->
+    <div class="modal fade" id="deletePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title alert-danger" id="exampleModalLabel">&nbsp;Suppression du post&nbsp;</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous vraiment supprimer ce post ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary btn-danger" href="#">Confirmer suppression</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('button[data-action="delete"]').click(function () {
+                var i = $(this).attr('id');
+                var path = "../admin/deletePost/"+ i ;
+                $('#deletePost .modal-footer a').attr("href", path);
+            });
+        });
+    </script>
 {% endblock %}

@@ -10,6 +10,11 @@ use Model\Manager\UserManager;
 
 class AdminController extends Controller
 {
+    /**
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function index()
     {
         $_SESSION['admin'] = true;
@@ -127,7 +132,11 @@ class AdminController extends Controller
     }
 
     public function deletePost($idPost) {
-        echo 'Delete post '. $idPost;
+        $delPost = new PostManager();
+        $PostIsDeleted = $delPost->deletePost($idPost);
+        if($PostIsDeleted) {
+            $this->index();
+        }
     }
 
     /**
@@ -149,7 +158,6 @@ class AdminController extends Controller
         } else {
             echo 'erreur tous les champs ne sont pas remplis';
         }
-        //print_r($_POST);
     }
 
     /**

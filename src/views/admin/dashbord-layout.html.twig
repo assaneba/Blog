@@ -46,7 +46,7 @@
 
         <!-- Nav Item - Posts menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../admin/index" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link collapsed" href="admin/index">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Posts</span>
             </a>
@@ -54,7 +54,7 @@
 
         <!-- Nav Item - Comments menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link collapsed" href="#">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Commentaires</span>
             </a>
@@ -62,7 +62,7 @@
 
         <!-- Nav Item - Categories menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link collapsed" href="#">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Catégories</span>
             </a>
@@ -70,7 +70,7 @@
 
         <!-- Nav Item - Users menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link collapsed" href="#">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Utilisateurs</span>
             </a>
@@ -97,7 +97,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello admin</span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                            <img class="img-profile rounded-circle" src="img/mon-avatar.png">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -191,6 +191,8 @@
 
 <!-- Page level custom scripts -->
 <script src="js/datatables-demo.js"></script>
+
+{% block deletePost %} {% endblock %}
 
 </body>
 

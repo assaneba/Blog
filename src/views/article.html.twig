@@ -79,13 +79,12 @@
                         <div class="mt-2 card-footer float-left">
                             <a id="editComment" class="btn btn-outline-dark">Modifier</a>
                             <a href="../blog/deleteComment/{{ comment.idcomment }}" class="btn btn-outline-danger">Supprimer</a>
-                            <input id="indice" type="hidden" value="{{ i }}">
+                            <input id="indice" type="hidden" value="{{ loop.index0 }}">
                             <input type="hidden" id="idComment" value="{{ comment.idcomment }}">
                         </div>
                         {% endif %}
                     </div>
                 </div>
-                    {% set i = i + 1 %}
                 {% endfor %}
 
             </section>
