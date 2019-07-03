@@ -6,3 +6,8 @@ src/Model/.DS_Store
 public/.DS_Store
 config/DS_Store
 css
+public/css
+public/js
+public/scss
+public/.sass-cache
+public/db
