@@ -83,20 +83,24 @@ class BlogController extends Controller
             $editCommentSucceed = $comment->editComment($_POST['newComment'], $commentId);
             if ($editCommentSucceed) {
                 $jsonTab['message'] = 'Votre commentaire a été bien modifié !';
+                $jsonTab['newComment'] = $_POST['newComment'];
+                $jsonTab['success'] = true;
             } else {
                 $jsonTab['message'] = "Erreur commentaire non modifié";
             }
         }
         else {
             $jsonTab['message'] = 'Veuillez vous authentifier pour commenter';
+            header('Location: ../blog');
         }
         echo json_encode($jsonTab);
 
     }
 
     public function deleteComment($idComment) {
-        $comment = new CommentManager();
-        $response = $comment->deleteComment($idComment);
+        /*$comment = new CommentManager();
+        $response = $comment->deleteComment($idComment);*/
+        $response = false;
         if($response) {
             echo 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
         } else {

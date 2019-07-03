@@ -1,0 +1,43 @@
+{% extends 'admin/dashbord-layout.html.twig' %}
+{% block title %} Ajouter un post {% endblock %}
+{% block Content %}
+
+    <h4 class="mx-auto">Modifier un post</h4>
+    <br>
+    <form action="../admin/submitUpdatePost" method="post">
+        <input type="hidden" name="idPost" value="{{ post.idpost }}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="title" class="form-control" value="{{ post.title }}">
+                </div>
+            </div>
+            <div class="offset-2 col-md-4">
+                <div class="form-group">
+                    <select name="idCategory" class="form-control">
+                        <option value="{{ postCategory.idcategory }}" selected>{{ postCategory.name }}</option>
+                        {% for category in categories %}
+                            {% if category.idcategory != postCategory.idcategory %}
+                        <option value="{{ category.idcategory }}">{{ category.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea name="lead" cols="54" rows="3"> {{ post.lead }}</textarea>
+                </div>
+                <div class="form-group">
+                    <textarea name="content" cols="100" rows="20">{{ post.content }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="float-right">
+            <div class="form-group">
+                <button class="btn btn-primary btn-lg btn-block" id="submit">Mettre à jour</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
