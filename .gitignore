@@ -6,7 +6,3 @@ src/Model/.DS_Store
 public/.DS_Store
 config/DS_Store
 css
-public/scss
-public/js
-db
-public/.sass-cache
