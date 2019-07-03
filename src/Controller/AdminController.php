@@ -23,7 +23,7 @@ class AdminController extends Controller
          */
         if($_SESSION['admin']) {
             $posts = new PostManager();
-            $posts = $posts->getAllPublic();
+            $posts = $posts->getAllPosts();
             echo $this->twig->render('admin/manage-posts.html.twig', array(
                 'posts' => $posts
             ));
@@ -143,14 +143,26 @@ class AdminController extends Controller
      * After submitting a new post creation
      */
     public function submitNewPost() {
+        $publicationDate = filter_input(INPUT_POST, 'plannedDate', FILTER_SANITIZE_STRING);
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
         $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
         $lead = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
         $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+        /**
+         * The if condition get $plannedDate if it is set
+         * And we delete the default T letter in the recover post value with str_replace function
+         * Else we set $publicationDate to current timezone
+         */
+        if(!empty($_POST['plannedDate'])) {
+            $publicationDate = str_replace('T', ' ',  $publicationDate);
+        } else {
+            date_default_timezone_set('UTC');
+            $publicationDate = date('Y/m/d h:i:s', time());
+        }
         if(!empty($title) && !empty($idCategory) && !empty($lead) && !empty($content)) {
             //echo 'ok all Good';
             $postMan = new PostManager();
-            $newPostIsSaved = $postMan->addPost($title, $idCategory, $lead, $content);
+            $newPostIsSaved = $postMan->addPost($title, $idCategory, $lead, $content, $publicationDate);
             if ($newPostIsSaved) {
                 //echo 'Post bien enregistré ! ';
                 $this->index();

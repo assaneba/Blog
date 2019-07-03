@@ -23,7 +23,24 @@ class PostManager extends Manager
         }
     }
 
+
+    /**
+     * Get all public posts wich are not planned ones
+     * @return array
+     */
     public function getAllPublic() {
+        //Get all public posts
+        $db = $this->connectToDB();
+        $q = $db->query('SELECT idpost, title, lead, content, date_creation, post_public, date_planned, 
+                                    user_iduser FROM post WHERE post_public=1 AND date_creation <= NOW() ORDER BY date_creation DESC');
+        return $q->fetchAll();
+    }
+
+    /**
+     * Get all public posts wich are not planned ones
+     * @return array
+     */
+    public function getAllPosts() {
         //Get all public posts
         $db = $this->connectToDB();
         $q = $db->query('SELECT idpost, title, lead, content, date_creation, post_public, date_planned, 
@@ -31,13 +48,14 @@ class PostManager extends Manager
         return $q->fetchAll();
     }
 
-    public function addPost($title, $idCategory, $lead, $content) {
+    public function addPost($title, $idCategory, $lead, $content,  $publicationDate) {
         $db = $this->connectToDB();
         $insertInPost = $db->prepare('INSERT INTO post (title, lead, content, date_creation, post_public, date_planned,
-                                        user_iduser) VALUES (?, ?, ?, NOW(), 1, NULL, 1)');
+                                        user_iduser) VALUES (?, ?, ?, ?, 1, NULL, 1)');
         $insertInPost->bindParam(1, $title);
         $insertInPost->bindParam(2, $lead);
         $insertInPost->bindParam(3, $content);
+        $insertInPost->bindParam(4,  $publicationDate);
         if($insertInPost->execute()){
             $idPost = $db->lastInsertId() ;
             $insertInCategoryHasPost = $db->prepare('INSERT INTO category_has_post (category_idcategory,

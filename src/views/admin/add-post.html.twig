@@ -13,17 +13,25 @@
             </div>
             <div class="offset-2 col-md-4">
                 <div class="form-group">
-                    <select name="idCategory" class="form-control" placeholder="Catégorie">
+                    <select name="idCategory" class="form-control">
                         {% for category in categories %}
                         <option value="{{ category.idcategory }}">{{ category.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="form-group">
                     <textarea name="lead" cols="54" rows="3" placeholder="Chapeau du post..."></textarea>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Planifier la publication du post</label> <br>
+                    <input type="datetime-local" name="plannedDate">
+                </div>
+            </div>
+            <div class="col-md-8">
                 <div class="form-group">
                     <textarea name="content" cols="100" rows="20" placeholder="Contenu du post..."></textarea>
                 </div>
