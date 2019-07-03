@@ -9,12 +9,14 @@
  * @var String $target contains recovered name of the target or action
  * @var array $params contains both GET and POST params if they are set
  */
-$url    = explode("/", $_GET['url']);
+$getUrl = filter_input(INPUT_GET, 'url');
+$params = filter_input(INPUT_POST, 'params');
+$url    = explode("/", $getUrl);
 $class  = "Controller\\" . (!empty($url[0])  ? ucfirst($url[0]) . 'Controller' : 'HomeController');
 
 $target     = isset($url[1]) ? $url[1] : "index";
 $getParams  = isset($url[2]) ? $url[2] : null;
-$postParams = isset($_POST['params']) ? $_POST['params'] : null;
+$postParams = isset($params) ? $params : null;
 
 $params = [
     "get"  => $getParams,

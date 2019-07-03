@@ -52,16 +52,16 @@ class BlogController extends Controller
     /**
      * @param $idPost
      * @var $idPost = id of the related post
-     * @var $_POST['commentContent'] = content of the comment to add
+     * @var $commentContent = content of the comment to add
      * @var $_SESSION['userIduser'] = content the id of the user which did the comment
      */
     public function addComment($postIdpost) {
         //echo 'recupération de commentaire';
         $_SESSION['userIduser'] = NULL;
-        $_POST['commentContent'];
+        $commentContent = filter_input(INPUT_POST, 'commentContent');
         if(isset($_SESSION['userIduser'])) {
             $comment = new CommentManager();
-            $insertCommentSucceed = $comment->addComment($_POST['commentContent'], $postIdpost, $_SESSION['userIduser']);
+            $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $_SESSION['userIduser']);
             if ($insertCommentSucceed) {
                 echo 'Votre commentaire a été bien enrégistré ! <a href="../blog/article/2"> Retour </a>';
             } else {
@@ -78,12 +78,13 @@ class BlogController extends Controller
         $jsonTab = array();
         $jsonTab['message'] = 'Edition de commentaire avec json';
         //echo 'Editer un commentaire <br> avec l\' id : '. $commentId;
-        if(isset($_POST['newComment'])) {
+        $newComment = filter_input(INPUT_POST, 'newComment');
+        if(isset($newComment)) {
             $comment = new CommentManager();
-            $editCommentSucceed = $comment->editComment($_POST['newComment'], $commentId);
+            $editCommentSucceed = $comment->editComment($newComment, $commentId);
             if ($editCommentSucceed) {
                 $jsonTab['message'] = 'Votre commentaire a été bien modifié !';
-                $jsonTab['newComment'] = $_POST['newComment'];
+                $jsonTab['newComment'] = $newComment;
                 $jsonTab['success'] = true;
             } else {
                 $jsonTab['message'] = "Erreur commentaire non modifié";

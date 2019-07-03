@@ -5,15 +5,10 @@ $email = filter_input(INPUT_POST, 'email');
 $phone = filter_input(INPUT_POST, 'phone');
 $message = filter_input(INPUT_POST, 'message');
 
-if(empty($_POST['name']) || empty($email) || empty($phone) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if(empty($name) || empty($email) || empty($phone) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
   http_response_code(500);
   exit();
 }
-
-/*$name = strip_tags(htmlspecialchars($_POST['name']));
-$email = strip_tags(htmlspecialchars($_POST['email']));
-$phone = strip_tags(htmlspecialchars($_POST['phone']));
-$message = strip_tags(htmlspecialchars($_POST['message']));*/
 
 // Create the email and send the message
 $to = "yourname@yourdomain.com"; // Add your email address in between the "" replacing yourname@yourdomain.com - This is where the form will send a message to.
