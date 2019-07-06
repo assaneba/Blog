@@ -40,11 +40,12 @@ class AdminController extends Controller
      */
     public function login()
     {
-
-        if(isset($_POST['email']) && isset($_POST['password'])) {
+        $email = filter_input(INPUT_POST, 'email');
+        $password = filter_input(INPUT_POST, 'password');
+        if(isset($email) && isset($password)) {
             //echo $this->twig->render('login.html.twig');
             $checkUser = new UserManager();
-            $user = $checkUser->getUser($_POST['email'], $_POST['password']);
+            $user = $checkUser->getUser($email, $password);
             if($user->getIdUser() == NULL ) {
                 echo 'Erreur User inexistante';
             } else {
@@ -80,11 +81,17 @@ class AdminController extends Controller
      */
     public function register() {
 
-        if($_POST['password'] == $_POST['confirmPassword']) {
+        $password = filter_input(INPUT_POST, 'password');
+        $confirmPassword = filter_input(INPUT_POST, 'confirmPassword');
+        $email = filter_input(INPUT_POST, 'email');
+        $pseudo = filter_input(INPUT_POST, 'pseudo');
+        $firstName = filter_input(INPUT_POST, 'firstName');
+        $lastName = filter_input(INPUT_POST, 'lastName');
+        if($password == $confirmPassword) {
             //echo 'Cool password correspond';
             $user = new UserManager();
-            $emailAlreadyTaken = $user->checkEmail($_POST['email']);
-            $loginAlreadyTaken = $user->checkLogin($_POST['pseudo']);
+            $emailAlreadyTaken = $user->checkEmail($email);
+            $loginAlreadyTaken = $user->checkLogin($pseudo);
             if($emailAlreadyTaken) {
                 echo 'Erreur l\'email est déjà utilisé <br>';
 
@@ -92,8 +99,8 @@ class AdminController extends Controller
                 echo 'Erreur ce pseudo est déjà pris';
             }
             else {
-                $userAddSucceed = $user->addUser($_POST['pseudo'], $_POST['password'], $_POST['firstName'], $_POST['lastName'],
-                                        $_POST['email']);
+                $userAddSucceed = $user->addUser($pseudo, $password, $firstName, $lastName,
+                                        $email);
                 if($userAddSucceed) {
                     echo 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
                 }
@@ -148,12 +155,13 @@ class AdminController extends Controller
         $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
         $lead = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
         $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+
         /**
-         * The if condition get $plannedDate if it is set
+         * The if condition get $publicationDate if it is set
          * And we delete the default T letter in the recover post value with str_replace function
          * Else we set $publicationDate to current timezone
          */
-        if(!empty($_POST['plannedDate'])) {
+        if(!empty($publicationDate)) {
             $publicationDate = str_replace('T', ' ',  $publicationDate);
         } else {
             date_default_timezone_set('UTC');
