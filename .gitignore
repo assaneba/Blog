@@ -6,3 +6,4 @@ src/Model/.DS_Store
 public/.DS_Store
 config/DS_Store
 public/.sass-cache
+node_modules/

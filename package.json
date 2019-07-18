@@ -1,0 +1,25 @@
+{
+  "name": "blog",
+  "version": "0.1.1",
+  "engines": {
+    "node": "12.6.0",
+    "npm": "*"
+  },
+  "author": "Assane Ba",
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/assaneba/Blog/blob/master/LICENSE.md"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "~5.9.0",
+    "bootstrap": "~4.3.1",
+    "jquery": "~3.4.1",
+    "jquery.easing": "~1.4.1",
+    "sb-admin-2": "~3.3.8",
+    "startbootstrap-freelancer": "~5.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assaneba/Blog.git"
+  }
+}
