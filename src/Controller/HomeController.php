@@ -6,15 +6,18 @@ class HomeController extends Controller
 {
 
     public function index() {
-        echo $this->twig->render('home.html.twig');
+        $page = $this->twig->render('home.html.twig');
+        $this->viewPage($page);
     }
 
     public function login() {
-        echo $this->twig->render('login.html.twig');
+        $page = $this->twig->render('login.html.twig');
+        $this->viewPage($page);
     }
 
     public function register() {
-        echo $this->twig->render('register.html.twig');
+        $page = $this->twig->render('register.html.twig');
+        $this->viewPage($page);
     }
 
 }

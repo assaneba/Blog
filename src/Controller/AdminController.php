@@ -2,8 +2,6 @@
 
 namespace Controller;
 
-session_start();
-
 use Model\Manager\CategoryManager;
 use Model\Manager\PostManager;
 use Model\Manager\UserManager;
@@ -15,20 +13,42 @@ class AdminController extends Controller
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
+    private $message;
+
+    /**
+     * @return mixed
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param mixed $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
+
+
     public function index()
     {
-        $_SESSION['admin'] = true;
+        $accessTest = true;
         /**
         Test if the user have the rights to access admin dashbord, else we redirect to home
          */
-        if($_SESSION['admin']) {
+        if($accessTest) {
             $posts = new PostManager();
             $posts = $posts->getAllPosts();
-            echo $this->twig->render('admin/manage-posts.html.twig', array(
+            $page = $this->twig->render('admin/manage-posts.html.twig', array(
                 'posts' => $posts
             ));
+            $this->viewPage($page);
         } else {
-            echo $this->twig->render('home.html.twig');
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
         }
 
     }
@@ -47,28 +67,29 @@ class AdminController extends Controller
             $checkUser = new UserManager();
             $user = $checkUser->getUser($email, $password);
             if($user->getIdUser() == NULL ) {
-                echo 'Erreur User inexistante';
+                $this->message = 'Erreur User inexistante';
             } else {
                 /**
                  * Here is the case where user exists
                  * We check if the user is admin or simple user
                  */
                 if($user->getUserRole() == 'ROLE_ADMIN') {
-                    echo 'Page d\'admin';
+                    $this->message = 'Page d\'admin';
                     //echo $this->twig->render('admin/dashbord.html.twig');
                 }
                 else {
                     //On initialise les variables de session avec l'objet $user
-                    $_SESSION = $user;
-                    echo $this->twig->render('home.html.twig',
+                    $page = $this->twig->render('home.html.twig',
                         array(
-                            'session' => $_SESSION
+                            'session' => $user
                         ));
+                    $this->viewPage($page);
                 }
             }
         }
         else {
-            echo $this->twig->render('login.html.twig');
+            $page = $this->twig->render('login.html.twig');
+            $this->viewPage($page);
         }
     }
 
@@ -93,21 +114,21 @@ class AdminController extends Controller
             $emailAlreadyTaken = $user->checkEmail($email);
             $loginAlreadyTaken = $user->checkLogin($pseudo);
             if($emailAlreadyTaken) {
-                echo 'Erreur l\'email est déjà utilisé <br>';
+                $this->message = 'Erreur l\'email est déjà utilisé <br>';
 
             } elseif ($loginAlreadyTaken) {
-                echo 'Erreur ce pseudo est déjà pris';
+                $this->message = 'Erreur ce pseudo est déjà pris';
             }
             else {
                 $userAddSucceed = $user->addUser($pseudo, $password, $firstName, $lastName,
                                         $email);
                 if($userAddSucceed) {
-                    echo 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
+                    $this->message = 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
                 }
 
             }
         } else {
-            echo 'Erreur Les passwords ne correspondent pas';
+            $this->message = 'Erreur Les passwords ne correspondent pas';
         }
 
     }
@@ -118,9 +139,10 @@ class AdminController extends Controller
     public function addPost() {
         $categories = new CategoryManager();
         $categories = $categories->getCategories();
-        echo $this->twig->render('admin/add-post.html.twig', array(
+        $page = $this->twig->render('admin/add-post.html.twig', array(
             'categories' => $categories
         ));
+        $this->viewPage($page);
     }
 
     public function editPost($idPost) {
@@ -130,11 +152,12 @@ class AdminController extends Controller
         $category = new CategoryManager();
         $postCategory = $category->getCategory($idPost);
         $categories = $category->getCategories();
-        echo $this->twig->render('admin/modify-post.html.twig', array(
+        $page = $this->twig->render('admin/modify-post.html.twig', array(
             'post' => $post,
             'postCategory' => $postCategory,
             'categories' => $categories
         ));
+        $this->viewPage($page);
 
     }
 
@@ -176,7 +199,7 @@ class AdminController extends Controller
                 $this->index();
             }
         } else {
-            echo 'erreur tous les champs ne sont pas remplis';
+            $this->message = 'erreur tous les champs ne sont pas remplis';
         }
     }
 
@@ -197,7 +220,7 @@ class AdminController extends Controller
                 $this->index();
             }
         } else {
-            echo 'Erreur : certains champs ne sont pas remplis';
+            $this->message = 'Erreur : certains champs ne sont pas remplis';
         }
     }
 
