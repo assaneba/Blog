@@ -7,7 +7,6 @@ $message = filter_input(INPUT_POST, 'message');
 
 if(empty($name) || empty($email) || empty($phone) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
   http_response_code(500);
-  exit();
 }
 
 // Create the email and send the message
@@ -17,6 +16,6 @@ $body = "You have received a new message from your website contact form.\n\n"."H
 $header = "From: noreply@yourdomain.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
 $header .= "Reply-To: $email";	
 
-if(!mail($to, $subject, $body, $header))
-  http_response_code(500);
+/*if(!mail($to, $subject, $body, $header))
+  http_response_code(500);*/
 ?>

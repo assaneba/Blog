@@ -34,6 +34,4 @@ if (class_exists($class, true)) {
     } else {
         call_user_func([$class, "index"]);
     }
-} else {
-    echo "404 - Error";
 }

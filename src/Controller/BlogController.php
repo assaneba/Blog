@@ -1,32 +1,46 @@
 <?php
 
-
 namespace Controller;
 
 use Model\Manager\CommentManager;
 use Model\Manager\PostManager;
-session_start();
 
 class BlogController extends Controller
 {
+    private $message;
+
+    /**
+     * @return mixed
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param mixed $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
 
     public function index() {
         $post = new PostManager();
         $allPost = $post->getAllPublic();
-        //require_once __DIR__ . '/../views/test-view.php';
-        //var_dump($allPost);
-        //echo $allPost->getTitle().' '. $allPost->getContent();
-        echo $this->twig->render('blog.html.twig',
+        $page = $this->twig->render('blog.html.twig',
             array(
                 'posts' => $allPost
             )
         );
+        $this->viewPage($page);
 
     }
 
     public function article($idPost) {
         //echo 'Voir un article '. $params;
-        $_SESSION['userIduser'] = 2;
+        $tabSession['userIduser'] = 2;
         $post = new PostManager();
         $post = $post->getOne($idPost);
         $comments = new CommentManager();
@@ -37,14 +51,15 @@ class BlogController extends Controller
                 //echo 'Aucun commentaire';
                 $comments = NULL;
             }
-            echo $this->twig->render('article.html.twig',
+            $page = $this->twig->render('article.html.twig',
                 array(
                     'post' => $post,
                     'comments' => $comments,
-                    'session' => $_SESSION
+                    'session' => $tabSession
                 ));
+            $this->viewPage($page);
         } else {
-            echo 'Erreur 404 : post non trouvé';
+            $this->message = 'Erreur 404 : post non trouvé';
         }
 
     }
@@ -56,20 +71,19 @@ class BlogController extends Controller
      * @var $_SESSION['userIduser'] = content the id of the user which did the comment
      */
     public function addComment($postIdpost) {
-        //echo 'recupération de commentaire';
-        $_SESSION['userIduser'] = NULL;
+        $tabSession['userIduser'] = NULL;
         $commentContent = filter_input(INPUT_POST, 'commentContent');
-        if(isset($_SESSION['userIduser'])) {
+        if(isset($tabSession['userIduser'])) {
             $comment = new CommentManager();
-            $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $_SESSION['userIduser']);
+            $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $tabSession['userIduser']);
             if ($insertCommentSucceed) {
-                echo 'Votre commentaire a été bien enrégistré ! <a href="../blog/article/2"> Retour </a>';
+                $this->message = 'Votre commentaire a été bien enrégistré !';
             } else {
-                echo 'Erreur commentaire non inséré ';
+                $this->message = 'Erreur commentaire non inséré ';
             }
         }
         else {
-            echo 'Veuillez vous authentifier pour commenter';
+            $this->message = 'Veuillez vous authentifier pour commenter';
         }
 
     }
@@ -92,20 +106,17 @@ class BlogController extends Controller
         }
         else {
             $jsonTab['message'] = 'Veuillez vous authentifier pour commenter';
-            header('Location: ../blog');
         }
-        echo json_encode($jsonTab);
+        $jsonEncode = json_encode($jsonTab);
+        $this->viewPage($jsonEncode);
 
     }
 
     public function deleteComment($idComment) {
-        /*$comment = new CommentManager();
-        $response = $comment->deleteComment($idComment);*/
-        $response = false;
+        $comment = new CommentManager();
+        $response = $comment->deleteComment($idComment);
         if($response) {
-            echo 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
-        } else {
-            echo 'Erreur, impossible de supprimer ce commentaire <a href="../blog/article/2">Retour</a>';
+            $this->message = 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
         }
 
     }

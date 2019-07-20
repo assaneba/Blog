@@ -14,7 +14,12 @@ abstract class Controller
     public function __construct()
     {
         $loader = new FilesystemLoader(TEMPLATE_DIR);
-        $this->twig = $twig = new Environment($loader);
+        $twig = new Environment($loader);
+        $this->twig = $twig;
+    }
+
+    public function viewPage($twigpageElements) {
+            echo $twigpageElements;
     }
 
     abstract function index();
