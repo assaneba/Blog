@@ -18,9 +18,7 @@ class PostManager extends Manager
         if($inputs) {
             return new Post($inputs);
         }
-        else {
-            return false;
-        }
+
     }
 
 
