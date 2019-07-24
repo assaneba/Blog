@@ -261,9 +261,13 @@ class AdminController extends Controller
     }
 
     public function editCategory($idCategory) {
-        //echo 'Update catégorie system '. $idCategory;
-        $category = new CategoryManager();
-        $category->editCategory($idCategory);
+        $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
+        if(!empty($nameCat)) {
+            $category = new CategoryManager();
+            $category->editCategory($idCategory, $nameCat);
+            $this->message = "Catégorie modifiée avec succès";
+            $this->categories();
+        }
 
     }
 

@@ -33,10 +33,13 @@
                     {% for category in categories %}
                         <tr id="{{ category.idcategory }}">
                             <td>{{ category.name }}</td>
-                            <td class="text-right"><a href="../admin/editCategory/{{ category.idcategory }}" class="btn btn-primary" >Modifier</a></td>
-                            <td class="text-right"><button class="btn btn-danger" id="{{ category.idcategory }}" data-action="delete"
-                                        data-target="#deletePost" data-toggle="modal">
-                                    Supprimer</button>
+                            <td class="text-right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editCategory"
+                                        data-action="editCat" id="{{ category.idcategory }}">Modifier</button>
+                            </td>
+                            <td class="text-right">
+                                <button class="btn btn-danger" id="{{ category.idcategory }}" data-action="delete"
+                                        data-target="#deletePost" data-toggle="modal">Supprimer</button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -48,7 +51,7 @@
 {% endblock %}
 
 {% block deletePost %}
-    <!-- Modal - Delete a post -->
+    <!-- Modal - Delete a category -->
     <div class="modal fade" id="deletePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -78,4 +81,41 @@
             });
         });
     </script>
+
+    <!-- Modal - Edit a category -->
+    <div class="modal fade" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Changer le nom de la catégorie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="#">
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nameCat" class="col-form-label">Renseignez nom de la nouvelle catégorie :</label>
+                                <input type="text" class="form-control" name="nameCat">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <input type="submit" class="btn btn-primary" value="Valider">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('button[data-action="editCat"]').click(function () {
+                var i = $(this).attr('id');
+                var path = "../admin/editCategory/"+ i ;
+                $('#editCategory form').attr("action", path);
+            });
+        });
+    </script>
+
 {% endblock %}
