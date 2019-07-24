@@ -68,17 +68,6 @@ class CommentManager extends Manager
 
     }
 
-    public function deleteComment($idComment)
-    {
-        $dbc = $this->connectToDB();
-        $req = $dbc->prepare('DELETE FROM comment WHERE idcomment = :idComment');
-       $response = $req->execute(array(
-            ':idComment' => $idComment
-        ));
-       return $response;
-
-    }
-
     public function validateComment($idComment) {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('UPDATE comment SET published = 1 WHERE idcomment = :idComment');
@@ -87,4 +76,16 @@ class CommentManager extends Manager
         ));
         return $response;
     }
+
+    public function deleteComment($idComment)
+    {
+        $dbc = $this->connectToDB();
+        $req = $dbc->prepare('DELETE FROM comment WHERE idcomment = :idComment');
+        $response = $req->execute(array(
+            ':idComment' => $idComment
+        ));
+        return $response;
+
+    }
+
 }

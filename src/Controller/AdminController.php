@@ -314,4 +314,14 @@ class AdminController extends Controller
             $this->comments();
     }
 
+    /**
+     * On click on Supprimer button on comments page
+     */
+    public function deleteComment($idComment) {
+        $comment = new CommentManager();
+        $delComment = $comment->deleteComment($idComment);
+        if($delComment)
+            $this->comments();
+    }
+
 }
