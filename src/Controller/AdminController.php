@@ -260,4 +260,19 @@ class AdminController extends Controller
 
     }
 
+    public function editCategory($idCategory) {
+        //echo 'Update catégorie system '. $idCategory;
+        $category = new CategoryManager();
+        $category->editCategory($idCategory);
+
+    }
+
+    public function deleteCategory($idCategory) {
+        $category = new CategoryManager();
+        $deleteCat = $category->deleteCategory($idCategory);
+        if($deleteCat) {
+            $this->categories();
+        }
+    }
+
 }

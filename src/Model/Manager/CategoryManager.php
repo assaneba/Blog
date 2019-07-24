@@ -34,4 +34,20 @@ class CategoryManager extends Manager
         $req->execute();
     }
 
+    public function editCategory($idcategory, $nameCat) {
+        $dbc = $this->connectToDB();
+        $req = $dbc->prepare('UPDATE category SET name = ? WHERE idcategory = ?');
+        $req->bindParam(1, $nameCat);
+        $req->bindParam(2, $idcategory);
+        if($req->execute())
+            return true;
+    }
+
+    public function deleteCategory($idCategory) {
+        $dbc = $this->connectToDB();
+        $req = $dbc->prepare('DELETE FROM category WHERE idcategory = :idCategory');
+        $req->execute([':idCategory' => $idCategory]);
+        return $req;
+    }
+
 }
