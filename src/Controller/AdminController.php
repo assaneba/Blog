@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Manager\CategoryManager;
+use Model\Manager\CommentManager;
 use Model\Manager\PostManager;
 use Model\Manager\UserManager;
 
@@ -222,6 +223,105 @@ class AdminController extends Controller
         } else {
             $this->message = 'Erreur : certains champs ne sont pas remplis';
         }
+    }
+
+    /**
+     * On click on Categories menu
+     */
+    public function categories() {
+        $accessTest = true;
+        /**
+        Test if the user have the rights to access admin dashbord, else we redirect to home
+         */
+        if($accessTest) {
+            $category = new CategoryManager();
+            $categories = $category->getCategories();
+            $page = $this->twig->render('admin/manage-categories.html.twig', array(
+                'categories' => $categories
+            ));
+            $this->viewPage($page);
+        } else {
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
+        }
+    }
+
+    /**
+     * On click on add category button
+     */
+    public function addCategory () {
+        $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
+        if(!empty($nameCat)) {
+            //echo 'valeur remplie';
+            $category = new CategoryManager();
+            $category->addCategory($nameCat);
+            $this->message = 'Catégorie bien enrégistrée';
+            $this->categories();
+        }
+
+    }
+
+    /**
+     * On click on Confirm Modify modal
+     */
+    public function editCategory($idCategory) {
+        $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
+        if(!empty($nameCat)) {
+            $category = new CategoryManager();
+            $category->editCategory($idCategory, $nameCat);
+            $this->message = "Catégorie modifiée avec succès";
+            $this->categories();
+        }
+    }
+
+    /**
+     * On click on Confirm Delete category button
+     */
+    public function deleteCategory($idCategory) {
+        $category = new CategoryManager();
+        $deleteCat = $category->deleteCategory($idCategory);
+        if($deleteCat) {
+            $this->categories();
+        }
+    }
+
+    public function comments() {
+        $accessTest = true;
+        /**
+        Test if the user have the rights to access admin dashbord, else we redirect to home
+         */
+        if($accessTest) {
+            $comments = new CommentManager();
+            $comments = $comments->getUnpublishedCom();
+            $page = $this->twig->render('admin/manage-comments.html.twig', array(
+                'comments' => $comments
+            ));
+            $this->viewPage($page);
+        } else {
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
+        }
+    }
+
+    /**
+     * On click on Approuver button to validate comments
+     */
+    public function validateComment($idComment) {
+        $comment = new CommentManager();
+        $validateCom = $comment->validateComment($idComment);
+        if($validateCom)
+            $this->message = "Commentaire Approuvé ! ";
+            $this->comments();
+    }
+
+    /**
+     * On click on Supprimer button on comments page
+     */
+    public function deleteComment($idComment) {
+        $comment = new CommentManager();
+        $delComment = $comment->deleteComment($idComment);
+        if($delComment)
+            $this->comments();
     }
 
 }

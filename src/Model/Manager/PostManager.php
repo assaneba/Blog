@@ -60,7 +60,7 @@ class PostManager extends Manager
                                                                 post_idpost) VALUES (?, ?)');
             $insertInCatHasPost->bindParam(1, $idCategory);
             $insertInCatHasPost->bindParam(2, $idPost);
-            if($insertInCatHasPost->execute()){
+            if($insertInCatHasPost->execute()) {
                 //echo 'Super les deux requetes ont été bien enregistrées !';
                 return true;
             }

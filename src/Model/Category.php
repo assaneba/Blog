@@ -7,6 +7,12 @@ class Category
     private $idCategory;
     private $name;
 
+    public function __construct($inputs)
+    {
+        $this->setIdCategory($inputs->idcategory);
+        $this->setName($inputs->name);
+    }
+
     /**
      * @return mixed
      */
