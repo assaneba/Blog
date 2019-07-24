@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Manager\CategoryManager;
+use Model\Manager\CommentManager;
 use Model\Manager\PostManager;
 use Model\Manager\UserManager;
 
@@ -225,7 +226,7 @@ class AdminController extends Controller
     }
 
     /**
-     * On click on add category button
+     * On click on Categories menu
      */
     public function categories() {
         $accessTest = true;
@@ -260,6 +261,9 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * On click on Confirm Modify modal
+     */
     public function editCategory($idCategory) {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
         if(!empty($nameCat)) {
@@ -268,15 +272,46 @@ class AdminController extends Controller
             $this->message = "Catégorie modifiée avec succès";
             $this->categories();
         }
-
     }
 
+    /**
+     * On click on Confirm Delete category button
+     */
     public function deleteCategory($idCategory) {
         $category = new CategoryManager();
         $deleteCat = $category->deleteCategory($idCategory);
         if($deleteCat) {
             $this->categories();
         }
+    }
+
+    public function comments() {
+        $accessTest = true;
+        /**
+        Test if the user have the rights to access admin dashbord, else we redirect to home
+         */
+        if($accessTest) {
+            $comments = new CommentManager();
+            $comments = $comments->getUnpublishedCom();
+            $page = $this->twig->render('admin/manage-comments.html.twig', array(
+                'comments' => $comments
+            ));
+            $this->viewPage($page);
+        } else {
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
+        }
+    }
+
+    /**
+     * On click on Approuver button to validate comments
+     */
+    public function validateComment($idComment) {
+        $comment = new CommentManager();
+        $validateCom = $comment->validateComment($idComment);
+        if($validateCom)
+            $this->message = "Commentaire Approuvé ! ";
+            $this->comments();
     }
 
 }

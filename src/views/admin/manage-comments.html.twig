@@ -1,0 +1,73 @@
+{% extends "admin/dashbord-layout.html.twig" %}
+{% block title %} Manage posts {% endblock %}
+{% block Content %}
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Les Commentaires</h1>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Les commentaires</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Contenu</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for comment in comments %}
+                        <tr id="{{ comment.idcomment }}">
+                            <td>{{ comment.content }}</td>
+                            <td class="text-right">
+                                <a class="btn btn-primary" href="../admin/validateComment/{{ comment.idcomment }}">Approuver</a>
+                            </td>
+                            <td class="text-right">
+                                <button class="btn btn-danger" id="{{ comment.idcomment }}" data-action="delete"
+                                        data-target="#deletePost" data-toggle="modal">Supprimer</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block deletePost %}
+    <!-- Modal - Delete a category -->
+    <div class="modal fade" id="deletePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title alert-danger" id="exampleModalLabel">&nbsp;Suppression du commentaire&nbsp;</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous vraiment supprimer ce commentaire ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary btn-danger" href="#">Confirmer suppression</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('button[data-action="delete"]').click(function () {
+                var i = $(this).attr('id');
+                var path = "../admin/deleteComment/"+ i ;
+                $('#deletePost .modal-footer a').attr("href", path);
+            });
+        });
+    </script>
+
+{% endblock %}
