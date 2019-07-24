@@ -29,8 +29,6 @@ class Post
         //$this->hydrate($inputs);
     }
 
-    // Attribuer des valeurs dynamiquement via les setters aux champs des valeurs d'un objet post
-
     /*public function hydrate($inputs)
     {
 

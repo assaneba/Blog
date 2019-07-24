@@ -224,4 +224,40 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * On click on add category button
+     */
+    public function categories() {
+        $accessTest = true;
+        /**
+        Test if the user have the rights to access admin dashbord, else we redirect to home
+         */
+        if($accessTest) {
+            $category = new CategoryManager();
+            $categories = $category->getCategories();
+            $page = $this->twig->render('admin/manage-categories.html.twig', array(
+                'categories' => $categories
+            ));
+            $this->viewPage($page);
+        } else {
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
+        }
+    }
+
+    /**
+     * On click on add category button
+     */
+    public function addCategory () {
+        $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
+        if(!empty($nameCat)) {
+            //echo 'valeur remplie';
+            $category = new CategoryManager();
+            $category->addCategory($nameCat);
+            $this->message = 'Catégorie bien enrégistrée';
+            $this->categories();
+        }
+
+    }
+
 }
