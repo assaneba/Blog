@@ -8,7 +8,7 @@ use Model\User;
 class UserManager extends Manager
 {
 
-    public function getUser($email, $password) {
+    public function checkUser($email, $password) {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('SELECT iduser, login, password, first_name, last_name, email, user_role FROM user
                                         WHERE email=:email AND password=:password');
@@ -62,6 +62,47 @@ class UserManager extends Manager
         ));
         return $result;
 
+    }
+
+    public function getUsers() {
+        $dbc = $this->connectToDB();
+        $req = $dbc->query('SELECT iduser, login, password, first_name, last_name, email, user_role  FROM user');
+        return $req->fetchAll();
+    }
+
+    public function getUserbyId($idUser) {
+        $dbc = $this->connectToDB();
+        $req = $dbc->prepare('SELECT iduser, login, password, first_name, last_name, email, user_role  FROM user 
+                                        WHERE iduser = :idUser');
+        $req->execute(array(':idUser' => $idUser));
+        return $req->fetchObject();
+    }
+
+    public function updateUser($iduser, $login, $first_name, $last_name, $email, $user_role) {
+        $dbc = $this->connectToDB();
+        $req = $dbc->prepare('UPDATE user SET login = ?, first_name = ?, last_name = ?, email = ?, user_role = ?
+                                        WHERE iduser = ?');
+        $req->bindParam(1, $login);
+        $req->bindParam(2, $first_name);
+        $req->bindParam(3, $last_name);
+        $req->bindParam(4, $email);
+        $req->bindParam(5, $user_role);
+        $req->bindParam(6, $iduser);
+        return $req->execute();
+    }
+
+    public function updateUserWithPass($iduser, $login, $password, $first_name, $last_name, $email, $user_role) {
+        $dbc = $this->connectToDB();
+        $req = $dbc->prepare('UPDATE user SET login = ?, first_name = ?, last_name = ?, email = ?, user_role = ?,
+                                        password = ? WHERE iduser = ?');
+        $req->bindParam(1, $login);
+        $req->bindParam(2, $first_name);
+        $req->bindParam(3, $last_name);
+        $req->bindParam(4, $email);
+        $req->bindParam(5, $user_role);
+        $req->bindParam(6, $password);
+        $req->bindParam(7, $iduser);
+        return $req->execute();
     }
 
 }

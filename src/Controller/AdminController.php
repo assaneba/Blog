@@ -66,7 +66,7 @@ class AdminController extends Controller
         if(isset($email) && isset($password)) {
             //echo $this->twig->render('login.html.twig');
             $checkUser = new UserManager();
-            $user = $checkUser->getUser($email, $password);
+            $user = $checkUser->checkUser($email, $password);
             if($user->getIdUser() == NULL ) {
                 $this->message = 'Erreur User inexistante';
             } else {
@@ -262,7 +262,7 @@ class AdminController extends Controller
     }
 
     /**
-     * On click on Confirm Modify modal
+     * On click on Confirm Modify modal in categories manager page
      */
     public function editCategory($idCategory) {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
@@ -322,6 +322,62 @@ class AdminController extends Controller
         $delComment = $comment->deleteComment($idComment);
         if($delComment)
             $this->comments();
+    }
+
+    public function users() {
+        $accessTest = true;
+        /**
+        Test if the user have the rights to access admin dashbord, else we redirect to home
+         */
+        if($accessTest) {
+            $users = new UserManager();
+            $users = $users->getUsers();
+            $page = $this->twig->render('admin/manage-users.html.twig', array(
+                'users' => $users
+            ));
+            $this->viewPage($page);
+        } else {
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
+        }
+    }
+
+    public function addUser() {
+
+    }
+
+    /**
+    On click on Modifier button on users' manager page
+     */
+    public function editUser($idUser) {
+        //echo 'Sur la page edit user '. $idUser;
+        $user = new UserManager();
+        $user = $user->getUserbyId($idUser);
+        $page = $this->twig->render('admin/modify-user.html.twig', array(
+            'user' => $user
+        ));
+        $this->viewPage($page);
+    }
+
+    public function validateEditUser($idUser) {
+        $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
+        $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+        $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $password1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
+        $password2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
+        $user_role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+        if(!empty($password1) AND !empty($password2)) {
+            if($password1 === $password2) {
+                $updateUser = new UserManager();
+                $updateUser->updateUserWithPass($idUser, $login, $password1, $firstName, $lastName, $email, $user_role);
+                $this->users();
+            }
+        } else {
+            $updateUser = new UserManager();
+            $updateUser->updateUser($idUser, $login, $firstName, $lastName, $email, $user_role);
+            $this->users();
+        }
     }
 
 }

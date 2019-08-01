@@ -77,7 +77,7 @@ class BlogController extends Controller
             $comment = new CommentManager();
             $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $tabSession['userIduser']);
             if ($insertCommentSucceed) {
-                $this->message = 'Votre commentaire a été bien enrégistré !';
+                $this->message = 'Votre commentaire a été bien enregistré !';
             } else {
                 $this->message = 'Erreur commentaire non inséré ';
             }

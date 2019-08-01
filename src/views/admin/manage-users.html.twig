@@ -1,32 +1,36 @@
 {% extends "admin/dashbord-layout.html.twig" %}
-{% block title %} Manage comments {% endblock %}
+{% block title %} Manage users {% endblock %}
 {% block Content %}
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Les Commentaires</h1>
+    <h1 class="h3 mb-2 text-gray-800">Les utilisateurs</h1>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Les commentaires</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Les utilisateurs</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>Contenu</th>
+                        <th>Prénoms</th>
+                        <th>Nom</th>
+                        <th>Role</th>
                         <th></th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for comment in comments %}
-                        <tr id="{{ comment.idcomment }}">
-                            <td>{{ comment.content }}</td>
+                    {% for user in users %}
+                        <tr id="{{ user.iduser }}">
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.user_role }}</td>
                             <td class="text-right">
-                                <a class="btn btn-primary" href="../admin/validateComment/{{ comment.idcomment }}">Approuver</a>
+                                <a class="btn btn-primary" href="../admin/editUser/{{ user.iduser }}">Modifier</a>
                             </td>
                             <td class="text-right">
-                                <button class="btn btn-danger" id="{{ comment.idcomment }}" data-action="delete"
+                                <button class="btn btn-danger" id="{{ user.iduser }}" data-action="delete"
                                         data-target="#deletePost" data-toggle="modal">Supprimer</button>
                             </td>
                         </tr>
