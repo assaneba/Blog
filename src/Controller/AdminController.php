@@ -380,4 +380,10 @@ class AdminController extends Controller
         }
     }
 
+    public function deleteUser($idUser) {
+        $delUser = new UserManager();
+        $delUser->deleteUser($idUser);
+        $this->users();
+    }
+
 }

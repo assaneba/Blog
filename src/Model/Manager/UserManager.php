@@ -105,4 +105,10 @@ class UserManager extends Manager
         return $req->execute();
     }
 
+    public function deleteUser($idUser) {
+        $dbc = $this->connectToDB();
+        $req = $dbc->prepare('DELETE FROM user WHERE iduser = :idUser');
+        return $req->execute([':idUser' => $idUser]);
+    }
+
 }
