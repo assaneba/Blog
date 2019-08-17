@@ -1,4 +1,6 @@
 <?php
 
 require_once __DIR__. '/../config/bootstrap.php';
-require_once __DIR__ . '/../config/router.php';
+use Controller\Router;
+$app = new Router();
+$app->app();

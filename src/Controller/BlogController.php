@@ -7,7 +7,7 @@ use Model\Manager\PostManager;
 
 class BlogController extends Controller
 {
-    private $message;
+    protected $message;
 
     /**
      * @return mixed

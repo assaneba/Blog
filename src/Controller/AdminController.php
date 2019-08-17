@@ -9,38 +9,13 @@ use Model\Manager\UserManager;
 
 class AdminController extends Controller
 {
-    /**
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
-    private $message;
-
-    /**
-     * @return mixed
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * @param mixed $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
-
 
     public function index()
     {
-        $accessTest = true;
-        /**
-        Test if the user have the rights to access admin dashbord, else we redirect to home
+        /*
+        Test if the user have the rights to access admin dashbord, else we redirect to login page
          */
-        if($accessTest) {
+        if($this->roleUser === 'ROLE_ADMIN') {
             $posts = new PostManager();
             $posts = $posts->getAllPosts();
             $page = $this->twig->render('admin/manage-posts.html.twig', array(
@@ -48,38 +23,35 @@ class AdminController extends Controller
             ));
             $this->viewPage($page);
         } else {
-            $page = $this->twig->render('home.html.twig');
+            $page = $this->twig->render('login.html.twig');
             $this->viewPage($page);
         }
 
     }
 
-    /**
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
     public function login()
     {
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
+
         if(isset($email) && isset($password)) {
             //echo $this->twig->render('login.html.twig');
             $checkUser = new UserManager();
             $user = $checkUser->checkUser($email, $password);
+
             if($user->getIdUser() == NULL ) {
-                $this->message = 'Erreur User inexistante';
+                $this->message = 'Erreur utilisateur inexistant';
             } else {
-                /**
-                 * Here is the case where user exists
-                 * We check if the user is admin or simple user
+                /*
+                  Here is the case where user exists
+                  We check if the user is admin or simple user
                  */
                 if($user->getUserRole() == 'ROLE_ADMIN') {
-                    $this->message = 'Page d\'admin';
-                    //echo $this->twig->render('admin/dashbord.html.twig');
+                    $this->setCookieRole('role', 'ROLE_ADMIN');
+                    $this->index();
                 }
                 else {
-                    //On initialise les variables de session avec l'objet $user
+                    $this->setCookieRole('role', 'ROLE_USER');
                     $page = $this->twig->render('home.html.twig',
                         array(
                             'session' => $user
@@ -93,7 +65,6 @@ class AdminController extends Controller
             $this->viewPage($page);
         }
     }
-
 
     /**
      * First if condition test if the passwords set match
@@ -115,7 +86,7 @@ class AdminController extends Controller
             $emailAlreadyTaken = $user->checkEmail($email);
             $loginAlreadyTaken = $user->checkLogin($pseudo);
             if($emailAlreadyTaken) {
-                $this->message = 'Erreur l\'email est déjà utilisé <br>';
+                $this->message = 'Erreur l\'email est déjà utilisé';
 
             } elseif ($loginAlreadyTaken) {
                 $this->message = 'Erreur ce pseudo est déjà pris';
@@ -124,7 +95,8 @@ class AdminController extends Controller
                 $userAddSucceed = $user->addUser($pseudo, $password, $firstName, $lastName,
                                         $email);
                 if($userAddSucceed) {
-                    $this->message = 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
+                    $this->message = 'Utilisateur bien enrégistré !';
+                    $this->index();
                 }
 
             }
@@ -147,7 +119,6 @@ class AdminController extends Controller
     }
 
     public function editPost($idPost) {
-        //echo 'edit post '. $idPost;
         $post = new PostManager();
         $post = $post->getOne($idPost);
         $category = new CategoryManager();
@@ -340,10 +311,6 @@ class AdminController extends Controller
             $page = $this->twig->render('home.html.twig');
             $this->viewPage($page);
         }
-    }
-
-    public function addUser() {
-
     }
 
     /**
