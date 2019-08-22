@@ -15,10 +15,10 @@ class AdminController extends Controller
         /*
         Test if the user have the rights to access admin dashbord, else we redirect to login page
          */
-        if($this->roleUser === 'ROLE_ADMIN') {
+        if($this->checkAccessPanel()) {
             $posts = new PostManager();
             $posts = $posts->getAllPosts();
-            $page = $this->twig->render('admin/manage-posts.html.twig', array(
+            $page  = $this->twig->render('admin/manage-posts.html.twig', array(
                 'posts' => $posts
             ));
             $this->viewPage($page);
@@ -26,7 +26,6 @@ class AdminController extends Controller
             $page = $this->twig->render('login.html.twig');
             $this->viewPage($page);
         }
-
     }
 
     public function login()
@@ -46,12 +45,12 @@ class AdminController extends Controller
                   Here is the case where user exists
                   We check if the user is admin or simple user
                  */
-                if($user->getUserRole() == 'ROLE_ADMIN') {
-                    $this->setCookieRole('role', 'ROLE_ADMIN');
+                if($user->getUserRole() === 'ROLE_ADMIN') {
+                    $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
                     $this->index();
                 }
                 else {
-                    $this->setCookieRole('role', 'ROLE_USER');
+                    $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
                     $page = $this->twig->render('home.html.twig',
                         array(
                             'session' => $user
@@ -64,6 +63,13 @@ class AdminController extends Controller
             $page = $this->twig->render('login.html.twig');
             $this->viewPage($page);
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        $page = $this->twig->render('login.html.twig');
+        $this->viewPage($page);
     }
 
     /**
@@ -200,11 +206,10 @@ class AdminController extends Controller
      * On click on Categories menu
      */
     public function categories() {
-        $accessTest = true;
-        /**
+        /*
         Test if the user have the rights to access admin dashbord, else we redirect to home
          */
-        if($accessTest) {
+        if($this->checkAccessPanel()) {
             $category = new CategoryManager();
             $categories = $category->getCategories();
             $page = $this->twig->render('admin/manage-categories.html.twig', array(
@@ -257,11 +262,10 @@ class AdminController extends Controller
     }
 
     public function comments() {
-        $accessTest = true;
         /**
         Test if the user have the rights to access admin dashbord, else we redirect to home
          */
-        if($accessTest) {
+        if($this->checkAccessPanel()) {
             $comments = new CommentManager();
             $comments = $comments->getUnpublishedCom();
             $page = $this->twig->render('admin/manage-comments.html.twig', array(
@@ -296,11 +300,10 @@ class AdminController extends Controller
     }
 
     public function users() {
-        $accessTest = true;
         /**
         Test if the user have the rights to access admin dashbord, else we redirect to home
          */
-        if($accessTest) {
+        if($this->checkAccessPanel()) {
             $users = new UserManager();
             $users = $users->getUsers();
             $page = $this->twig->render('admin/manage-users.html.twig', array(

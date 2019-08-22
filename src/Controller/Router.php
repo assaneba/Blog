@@ -4,7 +4,7 @@ namespace Controller;
 
 class Router
 {
-   public function app()
+   public function run()
    {
        /*
              $_GET['url'] contains the url from rewrite of the .htaccess file
