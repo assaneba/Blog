@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Model;
-
 
 class Comment
 {
@@ -14,7 +12,8 @@ class Comment
     private $postIdPost;
     private $userIdUser;
 
-    public function __construct($inputs) {
+    public function __construct($inputs)
+    {
         $this->setIdComment($inputs->idcomment);
         $this->setDateComment($inputs->date_comment);
         $this->setDateLastModif($inputs->date_last_modif);

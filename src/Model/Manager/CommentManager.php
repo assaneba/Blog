@@ -1,13 +1,12 @@
 <?php
 
-
 namespace Model\Manager;
-
 
 class CommentManager extends Manager
 {
 
-    public function addComment($content, $postIdpost, $userIduser) {
+    public function addComment($content, $postIdpost, $userIduser)
+    {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('INSERT INTO comment (date_comment, date_last_modif, content, 
                                         published, post_idpost, user_iduser) VALUES (NOW(), NOW(), 
@@ -17,9 +16,9 @@ class CommentManager extends Manager
             ':post_idpost' => $postIdpost,
             ':user_iduser' => $userIduser
         ));
+
         // $result return true if query success
         return $result;
-
     }
 
     /**
@@ -36,8 +35,8 @@ class CommentManager extends Manager
            ':idPost' => $idPost
         ));
         $result = $req->fetchAll();
-        return $result;
 
+        return $result;
     }
 
     /**
@@ -45,27 +44,29 @@ class CommentManager extends Manager
      * Get Unpublished comments elements and users elements as author names and their Ids
      * @return array
      */
-    public function getUnpublishedCom() {
+    public function getUnpublishedCom()
+    {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('SELECT idcomment, date_comment, content, user_iduser FROM comment
                                         WHERE published = 0 ORDER BY date_last_modif DESC ');
         $req->execute();
         $result = $req->fetchAll();
-        return $result;
 
+        return $result;
     }
 
-    public function editComment($content, $commentId) {
+    public function editComment($content, $commentId)
+    {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('UPDATE comment SET date_last_modif = NOW(), content = :content WHERE idcomment = :commentId');
         $result = $req->execute(array(
-            'content' => $content,
+            'conte
+            nt' => $content,
             'commentId' => $commentId
         ));
+
         // $result return true if query success
         return $result;
-        //return true;
-
     }
 
     public function validateComment($idComment) {
@@ -74,6 +75,7 @@ class CommentManager extends Manager
         $response = $req->execute(array(
             ':idComment' => $idComment
         ));
+
         return $response;
     }
 
@@ -84,8 +86,8 @@ class CommentManager extends Manager
         $response = $req->execute(array(
             ':idComment' => $idComment
         ));
-        return $response;
 
+        return $response;
     }
 
 }

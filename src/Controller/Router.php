@@ -14,7 +14,7 @@ class Router
              @var  String $class contains recovered classname of the controller.
              @var String $target contains recovered name of the target or action
              @var array $params contains both GET and POST params if they are set
-            */
+        */
        $getUrl = filter_input(INPUT_GET, 'url');
        $params = filter_input(INPUT_POST, 'params');
        $url = explode("/", $getUrl);
@@ -40,4 +40,5 @@ class Router
            }
        }
    }
+
 }

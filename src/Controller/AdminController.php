@@ -72,13 +72,14 @@ class AdminController extends Controller
         $this->viewPage($page);
     }
 
-    /**
-     * First if condition test if the passwords set match
-     * In Second if condition
-        * We check if at first if the email or login is already exists in the database.
-        * If not we call addUser() function which add a new user
+    /*
+      First if condition test if the passwords set match
+      In Second if condition
+        We check if at first if the email or login is already exists in the database.
+        If not we call addUser() function which add a new user
      */
-    public function register() {
+    public function register()
+    {
 
         $password = filter_input(INPUT_POST, 'password');
         $confirmPassword = filter_input(INPUT_POST, 'confirmPassword');
@@ -87,7 +88,7 @@ class AdminController extends Controller
         $firstName = filter_input(INPUT_POST, 'firstName');
         $lastName = filter_input(INPUT_POST, 'lastName');
         if($password == $confirmPassword) {
-            //echo 'Cool password correspond';
+            // if passwords match then do;
             $user = new UserManager();
             $emailAlreadyTaken = $user->checkEmail($email);
             $loginAlreadyTaken = $user->checkLogin($pseudo);
@@ -112,10 +113,11 @@ class AdminController extends Controller
 
     }
 
-    /**
-     * On click on Add post button in order to get the creation form of a new post
+    /*
+      On click on Add post button in order to get the creation form of a new post
      */
-    public function addPost() {
+    public function addPost()
+    {
         $categories = new CategoryManager();
         $categories = $categories->getCategories();
         $page = $this->twig->render('admin/add-post.html.twig', array(
@@ -124,7 +126,8 @@ class AdminController extends Controller
         $this->viewPage($page);
     }
 
-    public function editPost($idPost) {
+    public function editPost($idPost)
+    {
         $post = new PostManager();
         $post = $post->getOne($idPost);
         $category = new CategoryManager();
@@ -139,7 +142,8 @@ class AdminController extends Controller
 
     }
 
-    public function deletePost($idPost) {
+    public function deletePost($idPost)
+    {
         $delPost = new PostManager();
         $PostIsDeleted = $delPost->deletePost($idPost);
         if($PostIsDeleted) {
@@ -150,7 +154,8 @@ class AdminController extends Controller
     /**
      * After submitting a new post creation
      */
-    public function submitNewPost() {
+    public function submitNewPost()
+    {
         $publicationDate = filter_input(INPUT_POST, 'plannedDate', FILTER_SANITIZE_STRING);
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
         $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
@@ -184,7 +189,8 @@ class AdminController extends Controller
     /**
      * After submitting to update post
      */
-    public function submitUpdatePost() {
+    public function submitUpdatePost()
+    {
         $idPost = filter_input(INPUT_POST, 'idPost', FILTER_SANITIZE_NUMBER_INT);
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
         $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
@@ -205,10 +211,8 @@ class AdminController extends Controller
     /**
      * On click on Categories menu
      */
-    public function categories() {
-        /*
-        Test if the user have the rights to access admin dashbord, else we redirect to home
-         */
+    public function categories()
+    {
         if($this->checkAccessPanel()) {
             $category = new CategoryManager();
             $categories = $category->getCategories();
@@ -225,7 +229,8 @@ class AdminController extends Controller
     /**
      * On click on add category button
      */
-    public function addCategory () {
+    public function addCategory ()
+    {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
         if(!empty($nameCat)) {
             //echo 'valeur remplie';
@@ -237,10 +242,11 @@ class AdminController extends Controller
 
     }
 
-    /**
-     * On click on Confirm Modify modal in categories manager page
+    /*
+      On click on Confirm Modify modal in categories manager page
      */
-    public function editCategory($idCategory) {
+    public function editCategory($idCategory)
+    {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
         if(!empty($nameCat)) {
             $category = new CategoryManager();
@@ -250,10 +256,11 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * On click on Confirm Delete category button
+    /*
+      On click on Confirm Delete category button
      */
-    public function deleteCategory($idCategory) {
+    public function deleteCategory($idCategory)
+    {
         $category = new CategoryManager();
         $deleteCat = $category->deleteCategory($idCategory);
         if($deleteCat) {
@@ -261,10 +268,8 @@ class AdminController extends Controller
         }
     }
 
-    public function comments() {
-        /**
-        Test if the user have the rights to access admin dashbord, else we redirect to home
-         */
+    public function comments()
+    {
         if($this->checkAccessPanel()) {
             $comments = new CommentManager();
             $comments = $comments->getUnpublishedCom();
@@ -278,10 +283,11 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * On click on Approuver button to validate comments
+    /*
+      On click on Approuver button to validate comments
      */
-    public function validateComment($idComment) {
+    public function validateComment($idComment)
+    {
         $comment = new CommentManager();
         $validateCom = $comment->validateComment($idComment);
         if($validateCom)
@@ -289,20 +295,19 @@ class AdminController extends Controller
             $this->comments();
     }
 
-    /**
-     * On click on Supprimer button on comments page
+    /*
+      On click on Supprimer button on comments page
      */
-    public function deleteComment($idComment) {
+    public function deleteComment($idComment)
+    {
         $comment = new CommentManager();
         $delComment = $comment->deleteComment($idComment);
         if($delComment)
             $this->comments();
     }
 
-    public function users() {
-        /**
-        Test if the user have the rights to access admin dashbord, else we redirect to home
-         */
+    public function users()
+    {
         if($this->checkAccessPanel()) {
             $users = new UserManager();
             $users = $users->getUsers();
@@ -316,10 +321,11 @@ class AdminController extends Controller
         }
     }
 
-    /**
+    /*
     On click on Modifier button on users' manager page
      */
-    public function editUser($idUser) {
+    public function editUser($idUser)
+    {
         //echo 'Sur la page edit user '. $idUser;
         $user = new UserManager();
         $user = $user->getUserbyId($idUser);
@@ -329,7 +335,8 @@ class AdminController extends Controller
         $this->viewPage($page);
     }
 
-    public function validateEditUser($idUser) {
+    public function validateEditUser($idUser)
+    {
         $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
         $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
         $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
@@ -350,7 +357,8 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteUser($idUser) {
+    public function deleteUser($idUser)
+    {
         $delUser = new UserManager();
         $delUser->deleteUser($idUser);
         $this->users();
