@@ -63,7 +63,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="../public/img/portfolio/cabin.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/cabin.png" alt="">
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="../public/img/portfolio/cake.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/cake.png" alt="">
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="../public/img/portfolio/circus.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/circus.png" alt="">
                     </div>
                 </div>
 
@@ -99,7 +99,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="../public/img/portfolio/game.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/game.png" alt="">
                     </div>
                 </div>
 
@@ -111,7 +111,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="../public/img/portfolio/safe.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/safe.png" alt="">
                     </div>
                 </div>
 
@@ -123,7 +123,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="../public/img/portfolio/submarine.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/submarine.png" alt="">
                     </div>
                 </div>
 
@@ -166,7 +166,7 @@
 
             <!-- About Section Button -->
             <div class="text-center mt-4">
-                <a class="btn btn-xl btn-outline-light" href="../public/cv_Assane_Thione_Ba.pdf" target="_blank">
+                <a class="btn btn-xl btn-outline-light" href="cv_Assane_Thione_Ba.pdf" target="_blank">
                     <i class="fas fa-download mr-2"></i>
                     Voir mon CV
                 </a>
@@ -238,32 +238,32 @@
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate" method="post" action="home/sendMail">
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Nom</label>
-                                <input class="form-control" id="name" type="text" placeholder="Prénom(s) et nom" required="required" data-validation-required-message="Veuillez renseigner votre nom">
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Prénom(s) et nom" required="required" data-validation-required-message="Veuillez renseigner votre nom">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Email</label>
-                                <input class="form-control" id="email" type="email" placeholder="Email" required="required" data-validation-required-message="Veuillez renseigner votre email">
+                                <input class="form-control" id="email" name="email" type="email" placeholder="Email" required="required" data-validation-required-message="Veuillez renseigner votre email">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Téléphone</label>
-                                <input class="form-control" id="phone" type="tel" placeholder="Numéro de téléphone" required="required" data-validation-required-message="Veuillez renseigner votre numéro">
+                                <input class="form-control" id="phone" name="phone" type="tel" placeholder="Numéro de téléphone" required="required" data-validation-required-message="Veuillez renseigner votre numéro">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Message</label>
-                                <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Veuillez renseigner votre message"></textarea>
+                                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Veuillez renseigner votre message"></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>

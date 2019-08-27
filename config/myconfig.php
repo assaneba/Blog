@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: wathi
- * Date: 19/07/2018
- * Time: 16:22
- */
 
 /**
  * APP CONFIG
@@ -21,3 +15,8 @@ define('DB_USER', 'root');
 define('DB_PWD', 'root');
 define('HOST_NAME', 'localhost');
 define('DRIVER', 'mysql');
+
+/**
+ * MAIL CONFIG
+ */
+define('EMAIL_TO', 'testblogmail@yopmail.com'); // Add your email address in between the "" replacing testblogmail@yopmail.com - This is where the form will send a message to.
