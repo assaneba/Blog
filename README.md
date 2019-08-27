@@ -9,9 +9,11 @@ My professional Blog
 
 ## Prerequisites
 
-o	Install GitHub : [https://gist.github.com/derhuerst/1b15ff4652a867391f03][https://gist.github.com/derhuerst/1b15ff4652a867391f03]
-o	Install composer : [https://getcomposer.org/download/][https://getcomposer.org/download/]
-o	Install nodejs : [https://nodejs.org/en/download/][https://nodejs.org/en/download/]
+Install GitHub  : https://gist.github.com/derhuerst/1b15ff4652a867391f03
+
+Install composer : https://getcomposer.org/download/
+
+Install nodejs : https://nodejs.org/en/download/
 
 ---
 
@@ -25,20 +27,27 @@ o	Install nodejs : [https://nodejs.org/en/download/][https://nodejs.org/en/downl
 
 ## Installation
 
-o	Open terminal command line and in the project folder do
-	 `$ composer dump-autoload` 
-	 `$ npm install public/` 
-o	Import blog.sql file (in **db** folder) to your database
-o	Set database connection informations in **config/myconfig.php**
-o	Set email destination in **config/myconfig.php**
-o	Unzip **public/assets** folder in **public/** folder
+Open terminal command line and in the project folder do
+
+`$ composer dump-autoload` 
+
+`$ npm install public/` 
+
+Import blog.sql file (in **db** folder) to your database
+
+Set database connection informations in **config/myconfig.php**
+
+Set email destination in **config/myconfig.php**
+
+Unzip **public/assets** folder in **public/** folder
 
 ---
 
 ## Default access to admin
 
-o	Email : **johnsnow@mail.com**
-o	Password : **passer**
+Email : **johnsnow@mail.com**
+
+Password : **passer**
 
 _Please change default access Informations in admin dashboard after connection_
 
