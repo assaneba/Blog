@@ -7,7 +7,7 @@ use Model\Manager\PostManager;
 
 class BlogController extends Controller
 {
-    private $message;
+    protected $message;
 
     /**
      * @return mixed
@@ -26,7 +26,8 @@ class BlogController extends Controller
     }
 
 
-    public function index() {
+    public function index()
+    {
         $post = new PostManager();
         $allPost = $post->getAllPublic();
         $page = $this->twig->render('blog.html.twig',
@@ -38,7 +39,8 @@ class BlogController extends Controller
 
     }
 
-    public function article($idPost) {
+    public function article($idPost)
+    {
         //echo 'Voir un article '. $params;
         $tabSession['userIduser'] = 2;
         $post = new PostManager();
@@ -70,14 +72,15 @@ class BlogController extends Controller
      * @var $commentContent = content of the comment to add
      * @var $_SESSION['userIduser'] = content the id of the user which did the comment
      */
-    public function addComment($postIdpost) {
+    public function addComment($postIdpost)
+    {
         $tabSession['userIduser'] = NULL;
         $commentContent = filter_input(INPUT_POST, 'commentContent');
         if(isset($tabSession['userIduser'])) {
             $comment = new CommentManager();
             $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $tabSession['userIduser']);
             if ($insertCommentSucceed) {
-                $this->message = 'Votre commentaire a été bien enrégistré !';
+                $this->message = 'Votre commentaire a été bien enregistré !';
             } else {
                 $this->message = 'Erreur commentaire non inséré ';
             }
@@ -88,7 +91,8 @@ class BlogController extends Controller
 
     }
 
-    public function editComment($commentId) {
+    public function editComment($commentId)
+    {
         $jsonTab = array();
         $jsonTab['message'] = 'Edition de commentaire avec json';
         //echo 'Editer un commentaire <br> avec l\' id : '. $commentId;
@@ -112,7 +116,8 @@ class BlogController extends Controller
 
     }
 
-    public function deleteComment($idComment) {
+    public function deleteComment($idComment)
+    {
         $comment = new CommentManager();
         $response = $comment->deleteComment($idComment);
         if($response) {

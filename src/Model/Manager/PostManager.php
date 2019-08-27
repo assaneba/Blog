@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Model\Manager;
 
 use Model\Post;
@@ -8,7 +7,8 @@ use Model\Post;
 class PostManager extends Manager
 {
 
-    public function getOne($idpost) {
+    public function getOne($idpost)
+    {
         //Get a post by his id
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('SELECT idpost, title, lead, content, date_creation, post_public, date_planned, 
@@ -21,12 +21,12 @@ class PostManager extends Manager
 
     }
 
-
     /**
      * Get all public posts wich are not planned ones
      * @return array
      */
-    public function getAllPublic() {
+    public function getAllPublic()
+    {
         //Get all public posts
         $dbc = $this->connectToDB();
         $req = $dbc->query('SELECT idpost, title, lead, content, date_creation, post_public, date_planned, 
@@ -38,7 +38,8 @@ class PostManager extends Manager
      * Get all public posts wich are not planned ones
      * @return array
      */
-    public function getAllPosts() {
+    public function getAllPosts()
+    {
         //Get all public posts
         $dbc = $this->connectToDB();
         $req = $dbc->query('SELECT idpost, title, lead, content, date_creation, post_public, date_planned, 
@@ -46,7 +47,8 @@ class PostManager extends Manager
         return $req->fetchAll();
     }
 
-    public function addPost($title, $idCategory, $lead, $content,  $publicationDate) {
+    public function addPost($title, $idCategory, $lead, $content,  $publicationDate)
+    {
         $dbc = $this->connectToDB();
         $insertInPost = $dbc->prepare('INSERT INTO post (title, lead, content, date_creation, post_public, date_planned,
                                         user_iduser) VALUES (?, ?, ?, ?, 1, NULL, 1)');
@@ -67,7 +69,8 @@ class PostManager extends Manager
         }
     }
 
-    public function updatePost($idPost, $title, $idCategory, $lead, $content) {
+    public function updatePost($idPost, $title, $idCategory, $lead, $content)
+    {
         $dbc = $this->connectToDB();
         $insertInPost = $dbc->prepare('UPDATE post SET title = ?, lead = ?, content = ?, date_creation = NOW()
                                                 WHERE idpost = ?');

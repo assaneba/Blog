@@ -9,77 +9,48 @@ use Model\Manager\UserManager;
 
 class AdminController extends Controller
 {
-    /**
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
-    private $message;
-
-    /**
-     * @return mixed
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * @param mixed $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
-
 
     public function index()
     {
-        $accessTest = true;
-        /**
-        Test if the user have the rights to access admin dashbord, else we redirect to home
-         */
-        if($accessTest) {
-            $posts = new PostManager();
-            $posts = $posts->getAllPosts();
-            $page = $this->twig->render('admin/manage-posts.html.twig', array(
+        if($this->checkAccessPanel()) {
+            $getPosts = new PostManager();
+            $posts = $getPosts->getAllPosts();
+            $page  = $this->twig->render('admin/manage-posts.html.twig', array(
                 'posts' => $posts
             ));
             $this->viewPage($page);
         } else {
-            $page = $this->twig->render('home.html.twig');
+            $page = $this->twig->render('login.html.twig');
             $this->viewPage($page);
         }
-
     }
 
-    /**
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
     public function login()
     {
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
+
         if(isset($email) && isset($password)) {
             //echo $this->twig->render('login.html.twig');
             $checkUser = new UserManager();
-            $user = $checkUser->getUser($email, $password);
-            if($user->getIdUser() == NULL ) {
-                $this->message = 'Erreur User inexistante';
+            $user = $checkUser->checkUser($email, $password);
+
+            if($user->getIdUser() === NULL ) {
+                $this->message = 'Erreur utilisateur inexistant';
+                //Faire une redirection
+                $this->index();
             } else {
-                /**
-                 * Here is the case where user exists
-                 * We check if the user is admin or simple user
+                /*
+                  Here is the case where user exists
+                  We check if the user is admin or simple user
                  */
-                if($user->getUserRole() == 'ROLE_ADMIN') {
-                    $this->message = 'Page d\'admin';
-                    //echo $this->twig->render('admin/dashbord.html.twig');
+                if($user->getUserRole() === 'ROLE_ADMIN') {
+                    $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
+                    $home = new AdminController();
+                    $home->index();
                 }
                 else {
-                    //On initialise les variables de session avec l'objet $user
+                    $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
                     $page = $this->twig->render('home.html.twig',
                         array(
                             'session' => $user
@@ -94,14 +65,21 @@ class AdminController extends Controller
         }
     }
 
+    public function logout()
+    {
+        session_destroy();
+        $page = $this->twig->render('login.html.twig');
+        $this->viewPage($page);
+    }
 
-    /**
-     * First if condition test if the passwords set match
-     * In Second if condition
-        * We check if at first if the email or login is already exists in the database.
-        * If not we call addUser() function which add a new user
+    /*
+      First if condition test if the passwords set match
+      In Second if condition
+        We check if at first if the email or login is already exists in the database.
+        If not we call addUser() function which add a new user
      */
-    public function register() {
+    public function register()
+    {
 
         $password = filter_input(INPUT_POST, 'password');
         $confirmPassword = filter_input(INPUT_POST, 'confirmPassword');
@@ -110,12 +88,12 @@ class AdminController extends Controller
         $firstName = filter_input(INPUT_POST, 'firstName');
         $lastName = filter_input(INPUT_POST, 'lastName');
         if($password == $confirmPassword) {
-            //echo 'Cool password correspond';
+            // if passwords match then do;
             $user = new UserManager();
             $emailAlreadyTaken = $user->checkEmail($email);
             $loginAlreadyTaken = $user->checkLogin($pseudo);
             if($emailAlreadyTaken) {
-                $this->message = 'Erreur l\'email est déjà utilisé <br>';
+                $this->message = 'Erreur l\'email est déjà utilisé';
 
             } elseif ($loginAlreadyTaken) {
                 $this->message = 'Erreur ce pseudo est déjà pris';
@@ -124,7 +102,8 @@ class AdminController extends Controller
                 $userAddSucceed = $user->addUser($pseudo, $password, $firstName, $lastName,
                                         $email);
                 if($userAddSucceed) {
-                    $this->message = 'Utilisateur bien enrégistré ! <a href="../home/index"> Retour à l\'accueil  </a>' ;
+                    $this->message = 'Utilisateur bien enrégistré !';
+                    $this->index();
                 }
 
             }
@@ -134,10 +113,11 @@ class AdminController extends Controller
 
     }
 
-    /**
-     * On click on Add post button in order to get the creation form of a new post
+    /*
+      On click on Add post button in order to get the creation form of a new post
      */
-    public function addPost() {
+    public function addPost()
+    {
         $categories = new CategoryManager();
         $categories = $categories->getCategories();
         $page = $this->twig->render('admin/add-post.html.twig', array(
@@ -146,8 +126,8 @@ class AdminController extends Controller
         $this->viewPage($page);
     }
 
-    public function editPost($idPost) {
-        //echo 'edit post '. $idPost;
+    public function editPost($idPost)
+    {
         $post = new PostManager();
         $post = $post->getOne($idPost);
         $category = new CategoryManager();
@@ -162,7 +142,8 @@ class AdminController extends Controller
 
     }
 
-    public function deletePost($idPost) {
+    public function deletePost($idPost)
+    {
         $delPost = new PostManager();
         $PostIsDeleted = $delPost->deletePost($idPost);
         if($PostIsDeleted) {
@@ -173,7 +154,8 @@ class AdminController extends Controller
     /**
      * After submitting a new post creation
      */
-    public function submitNewPost() {
+    public function submitNewPost()
+    {
         $publicationDate = filter_input(INPUT_POST, 'plannedDate', FILTER_SANITIZE_STRING);
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
         $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
@@ -207,7 +189,8 @@ class AdminController extends Controller
     /**
      * After submitting to update post
      */
-    public function submitUpdatePost() {
+    public function submitUpdatePost()
+    {
         $idPost = filter_input(INPUT_POST, 'idPost', FILTER_SANITIZE_NUMBER_INT);
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
         $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
@@ -228,12 +211,9 @@ class AdminController extends Controller
     /**
      * On click on Categories menu
      */
-    public function categories() {
-        $accessTest = true;
-        /**
-        Test if the user have the rights to access admin dashbord, else we redirect to home
-         */
-        if($accessTest) {
+    public function categories()
+    {
+        if($this->checkAccessPanel()) {
             $category = new CategoryManager();
             $categories = $category->getCategories();
             $page = $this->twig->render('admin/manage-categories.html.twig', array(
@@ -249,7 +229,8 @@ class AdminController extends Controller
     /**
      * On click on add category button
      */
-    public function addCategory () {
+    public function addCategory ()
+    {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
         if(!empty($nameCat)) {
             //echo 'valeur remplie';
@@ -261,10 +242,11 @@ class AdminController extends Controller
 
     }
 
-    /**
-     * On click on Confirm Modify modal
+    /*
+      On click on Confirm Modify modal in categories manager page
      */
-    public function editCategory($idCategory) {
+    public function editCategory($idCategory)
+    {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
         if(!empty($nameCat)) {
             $category = new CategoryManager();
@@ -274,10 +256,11 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * On click on Confirm Delete category button
+    /*
+      On click on Confirm Delete category button
      */
-    public function deleteCategory($idCategory) {
+    public function deleteCategory($idCategory)
+    {
         $category = new CategoryManager();
         $deleteCat = $category->deleteCategory($idCategory);
         if($deleteCat) {
@@ -285,12 +268,9 @@ class AdminController extends Controller
         }
     }
 
-    public function comments() {
-        $accessTest = true;
-        /**
-        Test if the user have the rights to access admin dashbord, else we redirect to home
-         */
-        if($accessTest) {
+    public function comments()
+    {
+        if($this->checkAccessPanel()) {
             $comments = new CommentManager();
             $comments = $comments->getUnpublishedCom();
             $page = $this->twig->render('admin/manage-comments.html.twig', array(
@@ -303,10 +283,11 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * On click on Approuver button to validate comments
+    /*
+      On click on Approuver button to validate comments
      */
-    public function validateComment($idComment) {
+    public function validateComment($idComment)
+    {
         $comment = new CommentManager();
         $validateCom = $comment->validateComment($idComment);
         if($validateCom)
@@ -314,14 +295,73 @@ class AdminController extends Controller
             $this->comments();
     }
 
-    /**
-     * On click on Supprimer button on comments page
+    /*
+      On click on Supprimer button on comments page
      */
-    public function deleteComment($idComment) {
+    public function deleteComment($idComment)
+    {
         $comment = new CommentManager();
         $delComment = $comment->deleteComment($idComment);
         if($delComment)
             $this->comments();
+    }
+
+    public function users()
+    {
+        if($this->checkAccessPanel()) {
+            $users = new UserManager();
+            $users = $users->getUsers();
+            $page = $this->twig->render('admin/manage-users.html.twig', array(
+                'users' => $users
+            ));
+            $this->viewPage($page);
+        } else {
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
+        }
+    }
+
+    /*
+    On click on Modifier button on users' manager page
+     */
+    public function editUser($idUser)
+    {
+        //echo 'Sur la page edit user '. $idUser;
+        $user = new UserManager();
+        $user = $user->getUserbyId($idUser);
+        $page = $this->twig->render('admin/modify-user.html.twig', array(
+            'user' => $user
+        ));
+        $this->viewPage($page);
+    }
+
+    public function validateEditUser($idUser)
+    {
+        $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
+        $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+        $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $password1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
+        $password2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
+        $user_role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+        if(!empty($password1) AND !empty($password2)) {
+            if($password1 === $password2) {
+                $updateUser = new UserManager();
+                $updateUser->updateUserWithPass($idUser, $login, $password1, $firstName, $lastName, $email, $user_role);
+                $this->users();
+            }
+        } else {
+            $updateUser = new UserManager();
+            $updateUser->updateUser($idUser, $login, $firstName, $lastName, $email, $user_role);
+            $this->users();
+        }
+    }
+
+    public function deleteUser($idUser)
+    {
+        $delUser = new UserManager();
+        $delUser->deleteUser($idUser);
+        $this->users();
     }
 
 }
