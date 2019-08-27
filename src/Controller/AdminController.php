@@ -12,12 +12,9 @@ class AdminController extends Controller
 
     public function index()
     {
-        /*
-        Test if the user have the rights to access admin dashbord, else we redirect to login page
-         */
         if($this->checkAccessPanel()) {
-            $posts = new PostManager();
-            $posts = $posts->getAllPosts();
+            $getPosts = new PostManager();
+            $posts = $getPosts->getAllPosts();
             $page  = $this->twig->render('admin/manage-posts.html.twig', array(
                 'posts' => $posts
             ));
@@ -38,8 +35,10 @@ class AdminController extends Controller
             $checkUser = new UserManager();
             $user = $checkUser->checkUser($email, $password);
 
-            if($user->getIdUser() == NULL ) {
+            if($user->getIdUser() === NULL ) {
                 $this->message = 'Erreur utilisateur inexistant';
+                //Faire une redirection
+                $this->index();
             } else {
                 /*
                   Here is the case where user exists
@@ -47,7 +46,8 @@ class AdminController extends Controller
                  */
                 if($user->getUserRole() === 'ROLE_ADMIN') {
                     $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
-                    $this->index();
+                    $home = new AdminController();
+                    $home->index();
                 }
                 else {
                     $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
