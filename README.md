@@ -9,11 +9,11 @@ My professional Blog
 
 ## Prerequisites
 
-Install GitHub  : https://gist.github.com/derhuerst/1b15ff4652a867391f03
+Install GitHub  : [https://gist.github.com/derhuerst/1b15ff4652a867391f03](https://gist.github.com/derhuerst/1b15ff4652a867391f03)
 
-Install composer : https://getcomposer.org/download/
+Install composer : [https://getcomposer.org/download/](https://getcomposer.org/download/)
 
-Install nodejs : https://nodejs.org/en/download/
+Install nodejs : [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
 ---
 
@@ -75,3 +75,5 @@ Assane Thione Ba
 Code released under the MIT License
 
 [![GitHub License](https://img.shields.io/github/license/assaneba/Blog.svg?label=License)](https://github.com/assaneba/Blog/blob/master/LICENSE)
+
+[]: https://gist.github.com/derhuerst/1b15ff4652a867391f03
