@@ -27,19 +27,19 @@ Install nodejs : [https://nodejs.org/en/download/](https://nodejs.org/en/downloa
 
 ## Installation
 
-Open terminal command line and in the project folder do
+1.  Open terminal command line and in the project folder do
 
 `$ composer dump-autoload` 
 
 `$ npm install public/` 
 
-Import blog.sql file (in **db** folder) to your database
+1.  Import blog.sql file (in **db** folder) to your database
 
-Set database connection informations in **config/myconfig.php**
+1.  Set database connection informations in **config/myconfig.php**
 
-Set email destination in **config/myconfig.php**
+1.  Set email destination in **config/myconfig.php**
 
-Unzip **public/assets** folder in **public/** folder
+1.  Unzip **public/assets** folder in **public/** folder
 
 ---
 

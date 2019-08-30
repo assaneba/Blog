@@ -20,33 +20,33 @@
     <!-- Theme CSS -->
     <link href="node_modules/startbootstrap-freelancer/css/freelancer.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/sign-in.css" rel="stylesheet">
+    <link href="assets/css/sign-in.css" rel="stylesheet">
 
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="col-lg-8 col-xl-9 mx-auto">
             <div class="card card-signin flex-row my-5">
                 <div class="d-none d-md-flex card-img-left" id="moving-background">
                     <!-- Background image for card set in CSS! -->
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-center">S'inscrire</h5>
-                    <form class="form-signin" action="../admin/register" method="post">
+                    <form class="form-signin" action="../user/register" method="post">
                         <div class="form-label-group">
                             <input type="text" name="pseudo" id="inputUserame" class="form-control" placeholder="Pseudo" required autofocus>
                             <label for="inputUserame">Pseudo</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="text" name="firstName" id="inputUserame" class="form-control" placeholder="Prénom(s)" required autofocus>
-                            <label for="inputUserame">Prénom(s)</label>
+                            <input type="text" name="firstName" id="inputfirstName" class="form-control" placeholder="Prénom(s)" required autofocus>
+                            <label for="inputfirstName">Prénom(s)</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="text" name="lastName" id="inputUserame" class="form-control" placeholder="Nom" required autofocus>
-                            <label for="inputUserame">Nom</label>
+                            <input type="text" name="lastName" id="inputlastName" class="form-control" placeholder="Nom" required autofocus>
+                            <label for="inputlastName">Nom</label>
                         </div>
 
                         <div class="form-label-group">
