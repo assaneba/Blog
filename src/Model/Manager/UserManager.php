@@ -11,11 +11,18 @@ class UserManager extends Manager
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('SELECT iduser, login, password, first_name, last_name, email, user_role FROM user
-                                        WHERE email=:email AND password=:password');
-        $req->execute(array(':email' => $email, ':password' => $password));
+                                        WHERE email=:email');
+        $req->execute(array(':email' => $email));
         $inputs = $req->fetchObject();
+        //var_dump($inputs);die;
+        if($inputs){
+            //echo 'User Existe';
+            $user = new User($inputs);
+            if(password_verify($password, $user->getPassword()))
 
-        return new User($inputs);
+                return $user;
+        }
+
     }
 
     /**
@@ -48,19 +55,20 @@ class UserManager extends Manager
         }
     }
 
-    public function addUser($login, $password, $firstName, $lastName, $email)
+    //public function addUser($login, $password, $firstName, $lastName, $email)
+    public function addUser(array $newUserData)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare("INSERT INTO user (login, password, first_name, last_name, email, user_role)
                                         VALUES (:login, :password, :first_name, :last_name, :email, 'ROLE_USER')");
         $result = $req->execute(array(
-            'login' => $login,
-            'password' => $password,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email
+            'login' => $newUserData['pseudo'],
+            'password' => $newUserData['password'],
+            'first_name' => $newUserData['firstName'],
+            'last_name' => $newUserData['lastName'],
+            'email' => $newUserData['email']
         ));
-
+        //var_dump($newUserData);die;
         return $result;
     }
 

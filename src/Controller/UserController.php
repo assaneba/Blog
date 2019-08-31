@@ -9,6 +9,11 @@ use Model\Manager\UserManager;
 class UserController extends Controller
 {
 
+    public function index()
+    {
+        $page = $this->twig->render('home.html.twig');
+        $this->viewPage($page);
+    }
 
     public function login()
     {
@@ -16,13 +21,11 @@ class UserController extends Controller
         $password = filter_input(INPUT_POST, 'password');
 
         if(isset($email) && isset($password)) {
-            //echo $this->twig->render('login.html.twig');
             $checkUser = new UserManager();
             $user = $checkUser->checkUser($email, $password);
-
-            if($user->getIdUser() === NULL ) {
+            if($user === NULL ) {
                 $this->message = 'Erreur utilisateur inexistant';
-                //Faire une redirection
+                //If user don't exist or password don't match
                 $this->index();
             } else {
                 /*
@@ -71,8 +74,8 @@ class UserController extends Controller
         $newUserData['pseudo'] = filter_input(INPUT_POST, 'pseudo');
         $newUserData['firstName'] = filter_input(INPUT_POST, 'firstName');
         $newUserData['lastName'] = filter_input(INPUT_POST, 'lastName');
-        //var_dump($newUserData);die;
-        if(empty($newUserData))
+        //var_dump(isset($newUserData['password']));die;
+        if(isset($newUserData['password']))
         {
             if ($newUserData['password'] === $newUserData['confirmPassword']) {
                 // if passwords match then do;
@@ -87,8 +90,7 @@ class UserController extends Controller
                 } else {
                     $newUserData['password'] = password_hash($newUserData['password'], PASSWORD_BCRYPT);
                     //var_dump($newUserData['password']);die;
-                    $userAddSucceed = $user->addUser($newUserData['pseudo'], $newUserData['password'], $newUserData['firstName'], $newUserData['lastName'],
-                        $newUserData['email']);
+                    $userAddSucceed = $user->addUser($newUserData);
                     if ($userAddSucceed) {
                         $this->message = 'Utilisateur bien enrégistré !';
                         $this->index();

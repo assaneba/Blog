@@ -45,7 +45,7 @@ abstract class Controller
             echo $twigpageElements;
     }
 
-    //abstract function index();
+    abstract function index();
 
     public function createSession(int $idUser, string $username, string $role)
     {
