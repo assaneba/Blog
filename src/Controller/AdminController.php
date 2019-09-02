@@ -135,8 +135,8 @@ class AdminController extends Controller
             ));
             $this->viewPage($page);
         } else {
-            $page = $this->twig->render('home.html.twig');
-            $this->viewPage($page);
+            $home = new HomeController();
+            $home->index();
         }
     }
 
@@ -192,8 +192,8 @@ class AdminController extends Controller
             ));
             $this->viewPage($page);
         } else {
-            $page = $this->twig->render('home.html.twig');
-            $this->viewPage($page);
+            $home = new HomeController();
+            $home->index();
         }
     }
 

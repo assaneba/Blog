@@ -2,12 +2,18 @@
 
 namespace Controller;
 
+use Model\Manager\PostManager;
+
 class HomeController extends Controller
 {
 
     public function index()
     {
-        $page = $this->twig->render('home.html.twig');
+        $post = new PostManager();
+        $allPost = $post->getAllPublic();
+        $page = $this->twig->render('home.html.twig', array(
+            'posts' => $allPost
+        ));
         $this->viewPage($page);
     }
 

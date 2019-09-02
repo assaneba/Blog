@@ -20,8 +20,8 @@ class UserController extends Controller
             ));
             $this->viewPage($page);
         } else {
-            $page = $this->twig->render('home.html.twig');
-            $this->viewPage($page);
+            $home = new HomeController();
+            $home->index();
         }
     }
 
@@ -49,11 +49,8 @@ class UserController extends Controller
                 }
                 else {
                     $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
-                    $page = $this->twig->render('home.html.twig',
-                        array(
-                            'session' => $user
-                        ));
-                    $this->viewPage($page);
+                    $home = new HomeController();
+                    $home->index();
                 }
             }
         }
