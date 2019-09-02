@@ -11,8 +11,17 @@ class UserController extends Controller
 
     public function index()
     {
-        $page = $this->twig->render('home.html.twig');
-        $this->viewPage($page);
+        if($this->checkAccessPanel()) {
+            $users = new UserManager();
+            $users = $users->getUsers();
+            $page = $this->twig->render('admin/manage-users.html.twig', array(
+                'users' => $users
+            ));
+            $this->viewPage($page);
+        } else {
+            $page = $this->twig->render('home.html.twig');
+            $this->viewPage($page);
+        }
     }
 
     public function login()
@@ -106,6 +115,50 @@ class UserController extends Controller
             $page = $this->twig->render('register.html.twig');
             $this->viewPage($page);
         }
-
     }
+
+    /*
+    On click on Modifier button on users' manager page
+     */
+    public function editUser($idUser)
+    {
+        //echo 'Sur la page edit user '. $idUser;
+        $user = new UserManager();
+        $user = $user->getUserbyId($idUser);
+        $page = $this->twig->render('admin/modify-user.html.twig', array(
+            'user' => $user
+        ));
+        $this->viewPage($page);
+    }
+
+    public function validateEditUser($idUser)
+    {
+        $userData['login'] = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
+        $userData['firstName'] = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+        $userData['lastName'] = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
+        $userData['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $userData['password1'] = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
+        $userData['password2'] = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
+        $userData['user_role'] = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+        if(!empty($password1) AND !empty($password2)) {
+            if($userData['password1'] === $userData['password2']) {
+                $updateUser = new UserManager();
+                $updateUser->updateUserWithPass($idUser, $userData);
+                $this->index();
+            }
+        } else {
+            $updateUser = new UserManager();
+            //$updateUser->updateUser($idUser, $login, $firstName, $lastName, $email, $user_role);
+            $updateUser->updateUser($idUser, $userData);
+            $this->index();
+        }
+    }
+
+    public function deleteUser($idUser)
+    {
+        $delUser = new UserManager();
+        $delUser->deleteUser($idUser);
+        $this->index();
+    }
+
 }

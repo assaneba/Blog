@@ -119,8 +119,8 @@ class BlogController extends Controller
     public function deleteComment($idComment)
     {
         $comment = new CommentManager();
-        $response = $comment->deleteComment($idComment);
-        if($response) {
+        $commentIsDeleted = $comment->deleteComment($idComment);
+        if($commentIsDeleted) {
             $this->message = 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
         }
 

@@ -59,8 +59,8 @@ abstract class Controller
     public function checkAccessPanel()
     {
         $check = isset($this->userSession) AND $this->userSession['role'] === 'ROLE_ADMIN';
+
         return $check;
-        //return $this->userSession = 'ROLE_ADMIN';
     }
 
 }

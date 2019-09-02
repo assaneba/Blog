@@ -68,27 +68,29 @@ class AdminController extends Controller
      */
     public function submitNewPost()
     {
-        $publicationDate = filter_input(INPUT_POST, 'plannedDate', FILTER_SANITIZE_STRING);
-        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-        $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
-        $lead = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
-        $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+        $post['publicationDate'] = filter_input(INPUT_POST, 'plannedDate', FILTER_SANITIZE_STRING);
+        $post['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+        $post['idCategory'] = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
+        $post['lead'] = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
+        $post['content'] = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
 
         /**
          * The if condition get $publicationDate if it is set
          * And we delete the default T letter in the recover post value with str_replace function
          * Else we set $publicationDate to current timezone
          */
-        if(!empty($publicationDate)) {
-            $publicationDate = str_replace('T', ' ',  $publicationDate);
+        if(!empty($post['publicationDate'])) {
+            $post['publicationDate'] = str_replace('T', ' ',  $post['publicationDate']);
         } else {
             date_default_timezone_set('UTC');
-            $publicationDate = date('Y/m/d h:i:s', time());
+            $post['publicationDate'] = date('Y/m/d h:i:s', time());
         }
-        if(!empty($title) && !empty($idCategory) && !empty($lead) && !empty($content)) {
+        if(!empty($post['title']) && !empty($post['idCategory']) && !empty($post['lead']) && !empty($post['content'])) {
             //echo 'ok all Good';
             $postMan = new PostManager();
-            $newPostIsSaved = $postMan->addPost($title, $idCategory, $lead, $content, $publicationDate);
+            //$newPostIsSaved = $postMan->addPost($title, $idCategory, $lead, $content, $publicationDate);
+
+            $newPostIsSaved = $postMan->addPost($post);
             if ($newPostIsSaved) {
                 //echo 'Post bien enregistré ! ';
                 $this->index();
@@ -103,14 +105,14 @@ class AdminController extends Controller
      */
     public function submitUpdatePost()
     {
-        $idPost = filter_input(INPUT_POST, 'idPost', FILTER_SANITIZE_NUMBER_INT);
-        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-        $idCategory = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
-        $lead = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
-        $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
-        if(!empty($title) && !empty($idCategory) && !empty($lead) && !empty($content)) {
+        $post['idPost'] = filter_input(INPUT_POST, 'idPost', FILTER_SANITIZE_NUMBER_INT);
+        $post['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+        $post['idCategory'] = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
+        $post['lead'] = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
+        $post['content'] = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+        if(!empty($post['title']) && !empty($post['idCategory']) && !empty($post['lead']) && !empty($post['content'])) {
             $postMan = new PostManager();
-            $newPostIsSaved = $postMan->UpdatePost($idPost, $title, $idCategory, $lead, $content);
+            $newPostIsSaved = $postMan->UpdatePost($post);
             if ($newPostIsSaved) {
                 //echo 'Post bien mis à jour ! ';
                 $this->index();
@@ -218,62 +220,5 @@ class AdminController extends Controller
             $this->comments();
     }
 
-    public function users()
-    {
-        if($this->checkAccessPanel()) {
-            $users = new UserManager();
-            $users = $users->getUsers();
-            $page = $this->twig->render('admin/manage-users.html.twig', array(
-                'users' => $users
-            ));
-            $this->viewPage($page);
-        } else {
-            $page = $this->twig->render('home.html.twig');
-            $this->viewPage($page);
-        }
-    }
-
-    /*
-    On click on Modifier button on users' manager page
-     */
-    public function editUser($idUser)
-    {
-        //echo 'Sur la page edit user '. $idUser;
-        $user = new UserManager();
-        $user = $user->getUserbyId($idUser);
-        $page = $this->twig->render('admin/modify-user.html.twig', array(
-            'user' => $user
-        ));
-        $this->viewPage($page);
-    }
-
-    public function validateEditUser($idUser)
-    {
-        $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
-        $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
-        $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
-        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-        $password1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
-        $password2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
-        $user_role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
-        if(!empty($password1) AND !empty($password2)) {
-            if($password1 === $password2) {
-                $updateUser = new UserManager();
-                $updateUser->updateUserWithPass($idUser, $login, $password1, $firstName, $lastName, $email, $user_role);
-                $this->users();
-            }
-        } else {
-            $updateUser = new UserManager();
-            $updateUser->updateUser($idUser, $login, $firstName, $lastName, $email, $user_role);
-            $this->users();
-        }
-    }
-
-    public function deleteUser($idUser)
-    {
-        $delUser = new UserManager();
-        $delUser->deleteUser($idUser);
-        $this->users();
-    }
 
 }
