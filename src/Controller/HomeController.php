@@ -11,18 +11,6 @@ class HomeController extends Controller
         $this->viewPage($page);
     }
 
-    public function login()
-    {
-        $page = $this->twig->render('login.html.twig');
-        $this->viewPage($page);
-    }
-
-    public function register()
-    {
-        $page = $this->twig->render('register.html.twig');
-        $this->viewPage($page);
-    }
-
     public function sendMail()
     {
         // Check for empty fields

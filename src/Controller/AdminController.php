@@ -38,7 +38,7 @@ class AdminController extends Controller
         $this->viewPage($page);
     }
 
-    public function editPost($idPost)
+    public function editPost(int $idPost)
     {
         $post = new PostManager();
         $post = $post->getOne($idPost);
@@ -54,7 +54,7 @@ class AdminController extends Controller
 
     }
 
-    public function deletePost($idPost)
+    public function deletePost(int $idPost)
     {
         $delPost = new PostManager();
         $PostIsDeleted = $delPost->deletePost($idPost);
@@ -159,7 +159,7 @@ class AdminController extends Controller
     /*
       On click on Confirm Modify modal in categories manager page
      */
-    public function editCategory($idCategory)
+    public function editCategory(int $idCategory)
     {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
         if(!empty($nameCat)) {
@@ -173,7 +173,7 @@ class AdminController extends Controller
     /*
       On click on Confirm Delete category button
      */
-    public function deleteCategory($idCategory)
+    public function deleteCategory(int $idCategory)
     {
         $category = new CategoryManager();
         $deleteCat = $category->deleteCategory($idCategory);
@@ -200,7 +200,7 @@ class AdminController extends Controller
     /*
       On click on Approuver button to validate comments
      */
-    public function validateComment($idComment)
+    public function validateComment(int $idComment)
     {
         $comment = new CommentManager();
         $validateCom = $comment->validateComment($idComment);
@@ -212,7 +212,7 @@ class AdminController extends Controller
     /*
       On click on Supprimer button on comments page
      */
-    public function deleteComment($idComment)
+    public function deleteComment(int $idComment)
     {
         $comment = new CommentManager();
         $delComment = $comment->deleteComment($idComment);

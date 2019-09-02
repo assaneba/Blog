@@ -96,10 +96,10 @@ class UserManager extends Manager
         $req = $dbc->prepare('UPDATE user SET login = ?, first_name = ?, last_name = ?, email = ?, user_role = ?
                                         WHERE iduser = ?');
         $req->bindParam(1, $userData['login']);
-        $req->bindParam(2, $userData['first_name']);
-        $req->bindParam(3, $userData['last_name']);
+        $req->bindParam(2, $userData['firstName']);
+        $req->bindParam(3, $userData['lastName']);
         $req->bindParam(4, $userData['email']);
-        $req->bindParam(5, $userData['user_role']);
+        $req->bindParam(5, $userData['userRole']);
         $req->bindParam(6, $idUser);
 
         return $req->execute();

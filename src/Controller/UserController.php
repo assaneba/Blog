@@ -14,6 +14,7 @@ class UserController extends Controller
         if($this->checkAccessPanel()) {
             $users = new UserManager();
             $users = $users->getUsers();
+            //var_dump($users);die;
             $page = $this->twig->render('admin/manage-users.html.twig', array(
                 'users' => $users
             ));
@@ -120,7 +121,7 @@ class UserController extends Controller
     /*
     On click on Modifier button on users' manager page
      */
-    public function editUser($idUser)
+    public function editUser(int $idUser)
     {
         //echo 'Sur la page edit user '. $idUser;
         $user = new UserManager();
@@ -131,7 +132,7 @@ class UserController extends Controller
         $this->viewPage($page);
     }
 
-    public function validateEditUser($idUser)
+    public function validateEditUser(int $idUser)
     {
         $userData['login'] = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
         $userData['firstName'] = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
@@ -139,7 +140,8 @@ class UserController extends Controller
         $userData['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
         $userData['password1'] = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
         $userData['password2'] = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
-        $userData['user_role'] = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+        $userData['userRole'] = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+
         if(!empty($password1) AND !empty($password2)) {
             if($userData['password1'] === $userData['password2']) {
                 $updateUser = new UserManager();
@@ -150,11 +152,12 @@ class UserController extends Controller
             $updateUser = new UserManager();
             //$updateUser->updateUser($idUser, $login, $firstName, $lastName, $email, $user_role);
             $updateUser->updateUser($idUser, $userData);
+            //var_dump($updateUser);die;
             $this->index();
         }
     }
 
-    public function deleteUser($idUser)
+    public function deleteUser(int $idUser)
     {
         $delUser = new UserManager();
         $delUser->deleteUser($idUser);
