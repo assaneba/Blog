@@ -33,13 +33,13 @@ Install nodejs : [https://nodejs.org/en/download/](https://nodejs.org/en/downloa
 
 `$ npm install public/` 
 
-1.  Import blog.sql file (in **db** folder) to your database
+2.  Import blog.sql file (in **db** folder) to your database
 
-1.  Set database connection informations in **config/myconfig.php**
+3.  Set database connection informations in **config/myconfig.php**
 
-1.  Set email destination in **config/myconfig.php**
+4.  Set email destination in **config/myconfig.php**
 
-1.  Unzip **public/assets** folder in **public/** folder
+5.  Unzip **public/assets** folder in **public/** folder
 
 ---
 
@@ -75,5 +75,3 @@ Assane Thione Ba
 Code released under the MIT License
 
 [![GitHub License](https://img.shields.io/github/license/assaneba/Blog.svg?label=License)](https://github.com/assaneba/Blog/blob/master/LICENSE)
-
-[]: https://gist.github.com/derhuerst/1b15ff4652a867391f03
