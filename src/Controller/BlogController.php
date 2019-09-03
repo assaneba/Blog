@@ -76,7 +76,8 @@ class BlogController extends Controller
         $jsonTab = array();
         //$jsonTab['message'] = 'Edition de commentaire avec json';
         $newComment = filter_input(INPUT_POST, 'newComment');
-        if(isset($newComment)) {
+        if(isset($newComment))
+        {
             $comment = new CommentManager();
             $editCommentSucceed = $comment->editComment($newComment, $commentId);
             if ($editCommentSucceed) {
@@ -88,7 +89,7 @@ class BlogController extends Controller
             }
         }
         else {
-            $jsonTab['message'] = 'Veuillez vous authentifier pour commenter';
+            $this->index();
         }
         $jsonEncode = json_encode($jsonTab);
         $this->viewPage($jsonEncode);
