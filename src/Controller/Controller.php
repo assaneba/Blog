@@ -10,7 +10,6 @@ abstract class Controller
 
     protected $twig;
     protected $roleUser;
-    protected $message;
     protected $session;
     protected $userSession;
 
@@ -24,20 +23,11 @@ abstract class Controller
         //$this->roleUser = filter_input_array(INPUT_COOKIE);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
 
-    /**
-     * @param mixed $message
-     */
-    public function setMessage($message)
+    public function showMessage(string $message)
     {
-        $this->message = $message;
+        $alert = "<script>alert('$message');</script>";
+        echo filter_var($alert);
     }
 
     public function viewPage($twigpageElements)

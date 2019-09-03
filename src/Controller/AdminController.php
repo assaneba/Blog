@@ -86,17 +86,14 @@ class AdminController extends Controller
             $post['publicationDate'] = date('Y/m/d h:i:s', time());
         }
         if(!empty($post['title']) && !empty($post['idCategory']) && !empty($post['lead']) && !empty($post['content'])) {
-            //echo 'ok all Good';
             $postMan = new PostManager();
-            //$newPostIsSaved = $postMan->addPost($title, $idCategory, $lead, $content, $publicationDate);
-
             $newPostIsSaved = $postMan->addPost($post);
             if ($newPostIsSaved) {
-                //echo 'Post bien enregistré ! ';
                 $this->index();
+                $this->showMessage('Post bien enregistré ! ');
             }
         } else {
-            $this->message = 'erreur tous les champs ne sont pas remplis';
+            $this->showMessage('Erreur tous les champs ne sont pas remplis');
         }
     }
 
@@ -114,11 +111,11 @@ class AdminController extends Controller
             $postMan = new PostManager();
             $newPostIsSaved = $postMan->UpdatePost($post);
             if ($newPostIsSaved) {
-                //echo 'Post bien mis à jour ! ';
                 $this->index();
+                $this->showMessage('Post bien mis à jour ! ');
             }
         } else {
-            $this->message = 'Erreur : certains champs ne sont pas remplis';
+            $this->showMessage('Erreur : certains champs ne sont pas remplis');
         }
     }
 
@@ -147,11 +144,10 @@ class AdminController extends Controller
     {
         $nameCat = filter_input(INPUT_POST, 'nameCat', FILTER_SANITIZE_STRING);
         if(!empty($nameCat)) {
-            //echo 'valeur remplie';
             $category = new CategoryManager();
             $category->addCategory($nameCat);
-            $this->message = 'Catégorie bien enrégistrée';
             $this->categories();
+            $this->showMessage('Catégorie bien enregistrée');
         }
 
     }
@@ -165,8 +161,8 @@ class AdminController extends Controller
         if(!empty($nameCat)) {
             $category = new CategoryManager();
             $category->editCategory($idCategory, $nameCat);
-            $this->message = "Catégorie modifiée avec succès";
             $this->categories();
+            $this->showMessage("Catégorie modifiée avec succès");
         }
     }
 
@@ -205,8 +201,8 @@ class AdminController extends Controller
         $comment = new CommentManager();
         $validateCom = $comment->validateComment($idComment);
         if($validateCom)
-            $this->message = "Commentaire Approuvé ! ";
             $this->comments();
+            $this->showMessage("Commentaire Approuvé ! ");
     }
 
     /*

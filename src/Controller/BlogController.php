@@ -7,24 +7,6 @@ use Model\Manager\PostManager;
 
 class BlogController extends Controller
 {
-    protected $message;
-
-    /**
-     * @return mixed
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * @param mixed $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
 
     public function index()
     {
@@ -61,7 +43,7 @@ class BlogController extends Controller
                 ));
             $this->viewPage($page);
         } else {
-            $this->message = 'Erreur 404 : post non trouvé';
+            $this->showMessage('Erreur 404 : post non trouvé');
         }
 
     }
@@ -80,13 +62,13 @@ class BlogController extends Controller
             $comment = new CommentManager();
             $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $tabSession['userIduser']);
             if ($insertCommentSucceed) {
-                $this->message = 'Votre commentaire a été bien enregistré !';
+                $this->showMessage('Votre commentaire a été bien enregistré !');
             } else {
-                $this->message = 'Erreur commentaire non inséré ';
+                $this->showMessage('Erreur commentaire non inséré ');
             }
         }
         else {
-            $this->message = 'Veuillez vous authentifier pour commenter';
+            $this->showMessage('Veuillez vous authentifier pour commenter');
         }
 
     }
@@ -121,7 +103,7 @@ class BlogController extends Controller
         $comment = new CommentManager();
         $commentIsDeleted = $comment->deleteComment($idComment);
         if($commentIsDeleted) {
-            $this->message = 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
+            $this->showMessage('Le commentaire a été bien supprimé ! ');
         }
 
     }

@@ -34,9 +34,9 @@ class UserController extends Controller
             $checkUser = new UserManager();
             $user = $checkUser->checkUser($email, $password);
             if($user === NULL ) {
-                $this->message = 'Erreur utilisateur inexistant';
                 //If user don't exist or password don't match
                 $this->index();
+                $this->showMessage('Erreur utilisateur inexistant');
             } else {
                 /*
                   Here is the case where user exists
@@ -90,22 +90,22 @@ class UserController extends Controller
                 $emailAlreadyTaken = $user->checkEmail($newUserData['email']);
                 $loginAlreadyTaken = $user->checkLogin($newUserData['pseudo']);
                 if ($emailAlreadyTaken) {
-                    $this->message = 'Erreur l\'email est déjà utilisé';
+                    $this->showMessage('Erreur l\'email est déjà utilisé');
 
                 } elseif ($loginAlreadyTaken) {
-                    $this->message = 'Erreur ce pseudo est déjà pris';
+                    $this->showMessage('Erreur ce pseudo est déjà pris');
                 } else {
                     $newUserData['password'] = password_hash($newUserData['password'], PASSWORD_BCRYPT);
                     //var_dump($newUserData['password']);die;
                     $userAddSucceed = $user->addUser($newUserData);
                     if ($userAddSucceed) {
-                        $this->message = 'Utilisateur bien enrégistré !';
                         $this->index();
+                        $this->showMessage('Utilisateur bien enrégistré !');
                     }
 
                 }
             } else {
-                $this->message = 'Erreur Les mots de passe ne correspondent pas';
+                $this->showMessage('Erreur Les mots de passe ne correspondent pas');
             }
         }
         else
