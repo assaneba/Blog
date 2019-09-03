@@ -24,8 +24,8 @@
 
                 <!-- Author -->
                 <p class="lead">
-                    by
-                    <a href="#"> Id de l'auteur </a> {{ post.user }}
+                    Écrit par id de l'user :
+                    <i>  {{ post.user }} <i/>
                 </p>
 
                 <!-- Title -->
@@ -75,7 +75,7 @@
                         <div class="mt-2 card-footer float-right">
                             Date dernière modif : {{ comment.date_last_modif|date('d/m/Y à h:m') }}
                         </div>
-                        {% if session.userIduser and session.userIduser == comment.user_iduser %}
+                        {% if session.id and session.id == comment.user_iduser %}
                         <div class="mt-2 card-footer float-left">
                             <a id="editComment" class="btn btn-outline-dark">Modifier</a>
                             <a href="../blog/deleteComment/{{ comment.idcomment }}" class="btn btn-outline-danger">Supprimer</a>

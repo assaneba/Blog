@@ -35,8 +35,8 @@ class HomeController extends Controller
         $header .= "reply-to: $email";
         if(!mail(EMAIL_TO, $subject, $body, $header))
             http_response_code(500);
-        $this->index();
-        $this->showMessage('Votre mail a été bien envoyé');
+            $this->index();
+            $this->showMessage('Votre mail a été bien envoyé');
     }
 
 }

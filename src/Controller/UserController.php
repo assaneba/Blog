@@ -88,7 +88,7 @@ class UserController extends Controller
                 $emailAlreadyTaken = $user->checkEmail($newUserData['email']);
                 $loginAlreadyTaken = $user->checkLogin($newUserData['pseudo']);
                 if ($emailAlreadyTaken) {
-                    $this->showMessage('Erreur l\'email est déjà utilisé');
+                    $this->showMessage('Erreur : Email est déjà utilisé');
                 } elseif ($loginAlreadyTaken) {
                     $this->showMessage('Erreur ce pseudo est déjà pris');
                 } else {
@@ -115,7 +115,6 @@ class UserController extends Controller
      */
     public function editUser(int $idUser)
     {
-        //echo 'Sur la page edit user '. $idUser;
         $user = new UserManager();
         $user = $user->getUserbyId($idUser);
         $page = $this->twig->render('admin/modify-user.html.twig', array(
@@ -134,7 +133,7 @@ class UserController extends Controller
         $userData['password2'] = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
         $userData['userRole'] = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
 
-        if(!empty($password1) AND !empty($password2)) {
+        if(!empty($userData['password1']) AND !empty($userData['password2'])) {
             if($userData['password1'] === $userData['password2']) {
                 $updateUser = new UserManager();
                 $updateUser->updateUserWithPass($idUser, $userData);
@@ -142,9 +141,7 @@ class UserController extends Controller
             }
         } else {
             $updateUser = new UserManager();
-            //$updateUser->updateUser($idUser, $login, $firstName, $lastName, $email, $user_role);
             $updateUser->updateUser($idUser, $userData);
-            //var_dump($updateUser);die;
             $this->index();
         }
     }
