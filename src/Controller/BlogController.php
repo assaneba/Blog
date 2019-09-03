@@ -23,26 +23,24 @@ class BlogController extends Controller
 
     public function article(int $idPost)
     {
-        //echo 'Voir un article '. $params;
-        $tabSession['userIduser'] = 2;
         $post = new PostManager();
         $post = $post->getOne($idPost);
+        //var_dump($post);die;
         $comments = new CommentManager();
         $comments = $comments->getComments($idPost);
-        //var_dump($comments);
         if($post) {
             if(!$comments) {
-                //echo 'Aucun commentaire';
                 $comments = NULL;
             }
             $page = $this->twig->render('article.html.twig',
                 array(
                     'post' => $post,
-                    'comments' => $comments,
-                    'session' => $tabSession
+                    'comments' => $comments
                 ));
             $this->viewPage($page);
         } else {
+            $page = $this->twig->render('error404.html.twig');
+            $this->viewPage($page);
             $this->showMessage('Erreur 404 : post non trouvé');
         }
 
@@ -52,22 +50,23 @@ class BlogController extends Controller
      * @param $idPost
      * @var $idPost = id of the related post
      * @var $commentContent = content of the comment to add
-     * @var $_SESSION['userIduser'] = content the id of the user which did the comment
      */
     public function addComment(int $postIdpost)
     {
-        $tabSession['userIduser'] = NULL;
         $commentContent = filter_input(INPUT_POST, 'commentContent');
-        if(isset($tabSession['userIduser'])) {
+        if(isset($this->userSession['id'])) {
             $comment = new CommentManager();
-            $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $tabSession['userIduser']);
+            $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $this->userSession['id']);
             if ($insertCommentSucceed) {
-                $this->showMessage('Votre commentaire a été bien enregistré !');
+                $this->article($postIdpost);
+                $this->showMessage('Votre commentaire a été bien enregistré ! Il est en attente de validation. Merci de votre patience...' );
             } else {
+                $this->article($postIdpost);
                 $this->showMessage('Erreur commentaire non inséré ');
             }
         }
         else {
+            $this->article($postIdpost);
             $this->showMessage('Veuillez vous authentifier pour commenter');
         }
 
@@ -76,10 +75,10 @@ class BlogController extends Controller
     public function editComment(int $commentId)
     {
         $jsonTab = array();
-        $jsonTab['message'] = 'Edition de commentaire avec json';
-        //echo 'Editer un commentaire <br> avec l\' id : '. $commentId;
+        //$jsonTab['message'] = 'Edition de commentaire avec json';
         $newComment = filter_input(INPUT_POST, 'newComment');
-        if(isset($newComment)) {
+        if(isset($newComment))
+        {
             $comment = new CommentManager();
             $editCommentSucceed = $comment->editComment($newComment, $commentId);
             if ($editCommentSucceed) {
@@ -91,7 +90,7 @@ class BlogController extends Controller
             }
         }
         else {
-            $jsonTab['message'] = 'Veuillez vous authentifier pour commenter';
+            $this->index();
         }
         $jsonEncode = json_encode($jsonTab);
         $this->viewPage($jsonEncode);
@@ -103,6 +102,7 @@ class BlogController extends Controller
         $comment = new CommentManager();
         $commentIsDeleted = $comment->deleteComment($idComment);
         if($commentIsDeleted) {
+            $this->index();
             $this->showMessage('Le commentaire a été bien supprimé ! ');
         }
 

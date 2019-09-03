@@ -24,8 +24,8 @@
 
                 <!-- Author -->
                 <p class="lead">
-                    by
-                    <a href="#"> Id de l'auteur </a> {{ post.user }}
+                    Écrit par :
+                    <i>  {{ post.user }} <i/>
                 </p>
 
                 <!-- Title -->
@@ -75,7 +75,7 @@
                         <div class="mt-2 card-footer float-right">
                             Date dernière modif : {{ comment.date_last_modif|date('d/m/Y à h:m') }}
                         </div>
-                        {% if session.userIduser and session.userIduser == comment.user_iduser %}
+                        {% if session.id and session.id == comment.user_iduser %}
                         <div class="mt-2 card-footer float-left">
                             <a id="editComment" class="btn btn-outline-dark">Modifier</a>
                             <a href="../blog/deleteComment/{{ comment.idcomment }}" class="btn btn-outline-danger">Supprimer</a>
@@ -188,20 +188,18 @@
                             newComment = $(this).find("textarea[name=commentContent]").val();
                             url = $(this).attr("action");
                             $.post(url, {newComment:newComment}, function (data) {
-                                if (data.success == true) {
+                                if (data.success === true) {
                                     alert(data.message);
                                     $("#editComment2").html('<div class="commentContent">' + data.newComment + '</div>');
                                     $("#editComment").fadeIn();
                                     return false;
-                                    //$(".commentContent").eq(i).html('<div class="commentContent">test it</div>');
-                                    //data.newComment;
+
                                 } else {
                                     alert(data.message);
                                     return false;
                                 }
-
                             }, "json");
-                            //alert(url);
+
                             return false;
                         })
                 })

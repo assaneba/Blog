@@ -60,8 +60,7 @@ class CommentManager extends Manager
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('UPDATE comment SET date_last_modif = NOW(), content = :content WHERE idcomment = :commentId');
         $result = $req->execute(array(
-            'conte
-            nt' => $content,
+            'content' => $content,
             'commentId' => $commentId
         ));
 

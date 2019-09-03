@@ -23,7 +23,7 @@ class Post
         $this->setDateCreation($inputs->date_creation);
         $this->setPostPublic($inputs->post_public);
         $this->setDatePlanned($inputs->date_planned);
-        $this->setUser($inputs->user_iduser);
+        $this->setUser($inputs->login);
         //$this->hydrate($inputs);
     }
 

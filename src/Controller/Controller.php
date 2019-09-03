@@ -19,15 +19,16 @@ abstract class Controller
         if (isset($this->session['user'])) {
             $this->userSession = $this->session['user'];
         }
-        //$this->twig = $twig;
-        //$this->roleUser = filter_input_array(INPUT_COOKIE);
+        $this->twig->addGlobal('session', $this->userSession);
+
     }
 
 
     public function showMessage(string $message)
     {
         $alert = "<script>alert('$message');</script>";
-        echo filter_var($alert);
+        $alert = filter_var($alert);
+        $this->viewPage($alert);
     }
 
     public function viewPage($twigpageElements)
