@@ -25,6 +25,7 @@ class BlogController extends Controller
     {
         $post = new PostManager();
         $post = $post->getOne($idPost);
+        //var_dump($post);die;
         $comments = new CommentManager();
         $comments = $comments->getComments($idPost);
         if($post) {

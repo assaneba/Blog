@@ -12,7 +12,7 @@ class PostManager extends Manager
         //Get a post by his id
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('SELECT idpost, title, lead, content, date_creation, post_public, date_planned, 
-                                    user_iduser FROM post WHERE idpost=:id');
+                                        login FROM post INNER JOIN user ON user.iduser = post.user_iduser WHERE idpost=:id');
         $req->execute([':id' => $idpost]);
         $inputs = $req->fetchObject();
         if($inputs) {
