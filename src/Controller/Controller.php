@@ -27,7 +27,8 @@ abstract class Controller
     public function showMessage(string $message)
     {
         $alert = "<script>alert('$message');</script>";
-        echo filter_var($alert);
+        $alert = filter_var($alert);
+        $this->viewPage($alert);
     }
 
     public function viewPage($twigpageElements)

@@ -74,10 +74,10 @@ class AdminController extends Controller
         $post['lead'] = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
         $post['content'] = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
 
-        /**
-         * The if condition get $publicationDate if it is set
-         * And we delete the default T letter in the recover post value with str_replace function
-         * Else we set $publicationDate to current timezone
+        /*
+            The if condition get $publicationDate if it is set
+            And we delete the default T letter in the recover post value with str_replace function
+            Else we set $publicationDate to current timezone
          */
         if(!empty($post['publicationDate'])) {
             $post['publicationDate'] = str_replace('T', ' ',  $post['publicationDate']);
@@ -90,7 +90,7 @@ class AdminController extends Controller
             $newPostIsSaved = $postMan->addPost($post);
             if ($newPostIsSaved) {
                 $this->index();
-                $this->showMessage('Post bien enregistré ! ');
+                $this->showMessage('Article bien enregistré ! ');
             }
         } else {
             $this->showMessage('Erreur tous les champs ne sont pas remplis');
@@ -107,16 +107,12 @@ class AdminController extends Controller
         $post['idCategory'] = filter_input(INPUT_POST, 'idCategory', FILTER_SANITIZE_NUMBER_INT);
         $post['lead'] = filter_input(INPUT_POST, 'lead', FILTER_SANITIZE_STRING);
         $post['content'] = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
-        if(!empty($post['title']) && !empty($post['idCategory']) && !empty($post['lead']) && !empty($post['content'])) {
-            $postMan = new PostManager();
-            $newPostIsSaved = $postMan->UpdatePost($post);
-            if ($newPostIsSaved) {
+        $postMan = new PostManager();
+        $newPostIsUpdated = $postMan->UpdatePost($post);
+            if ($newPostIsUpdated) {
                 $this->index();
                 $this->showMessage('Post bien mis à jour ! ');
             }
-        } else {
-            $this->showMessage('Erreur : certains champs ne sont pas remplis');
-        }
     }
 
     /**

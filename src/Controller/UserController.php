@@ -81,28 +81,23 @@ class UserController extends Controller
         $newUserData['pseudo'] = filter_input(INPUT_POST, 'pseudo');
         $newUserData['firstName'] = filter_input(INPUT_POST, 'firstName');
         $newUserData['lastName'] = filter_input(INPUT_POST, 'lastName');
-        //var_dump(isset($newUserData['password']));die;
         if(isset($newUserData['password']))
         {
             if ($newUserData['password'] === $newUserData['confirmPassword']) {
-                // if passwords match then do;
                 $user = new UserManager();
                 $emailAlreadyTaken = $user->checkEmail($newUserData['email']);
                 $loginAlreadyTaken = $user->checkLogin($newUserData['pseudo']);
                 if ($emailAlreadyTaken) {
                     $this->showMessage('Erreur l\'email est déjà utilisé');
-
                 } elseif ($loginAlreadyTaken) {
                     $this->showMessage('Erreur ce pseudo est déjà pris');
                 } else {
                     $newUserData['password'] = password_hash($newUserData['password'], PASSWORD_BCRYPT);
-                    //var_dump($newUserData['password']);die;
                     $userAddSucceed = $user->addUser($newUserData);
                     if ($userAddSucceed) {
                         $this->index();
                         $this->showMessage('Utilisateur bien enrégistré !');
                     }
-
                 }
             } else {
                 $this->showMessage('Erreur Les mots de passe ne correspondent pas');

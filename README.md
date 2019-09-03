@@ -38,18 +38,7 @@ Install nodejs : [https://nodejs.org/en/download/](https://nodejs.org/en/downloa
 3.  Set database connection informations in **config/myconfig.php**
 
 4.  Set email destination in **config/myconfig.php**
-
 5.  Unzip **public/assets** folder in **public/** folder
-
----
-
-## Default access to admin
-
-Email : **johnsnow@mail.com**
-
-Password : **passer**
-
-_Please change default access Informations in admin dashboard after connection_
 
 ---
 
