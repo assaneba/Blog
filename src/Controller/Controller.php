@@ -10,7 +10,6 @@ abstract class Controller
 
     protected $twig;
     protected $roleUser;
-    protected $message;
     protected $session;
     protected $userSession;
 
@@ -24,20 +23,11 @@ abstract class Controller
         //$this->roleUser = filter_input_array(INPUT_COOKIE);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
 
-    /**
-     * @param mixed $message
-     */
-    public function setMessage($message)
+    public function showMessage(string $message)
     {
-        $this->message = $message;
+        $alert = "<script>alert('$message');</script>";
+        echo filter_var($alert);
     }
 
     public function viewPage($twigpageElements)
@@ -45,7 +35,7 @@ abstract class Controller
             echo $twigpageElements;
     }
 
-    //abstract function index();
+    abstract function index();
 
     public function createSession(int $idUser, string $username, string $role)
     {
@@ -58,9 +48,8 @@ abstract class Controller
 
     public function checkAccessPanel()
     {
-        $check = isset($this->userSession) AND $this->userSession['role'] === 'ROLE_ADMIN';
-        return $check;
-        //return $this->userSession = 'ROLE_ADMIN';
+        if(isset($this->userSession) AND $this->userSession['role'] === 'ROLE_ADMIN')
+            return true;
     }
 
 }

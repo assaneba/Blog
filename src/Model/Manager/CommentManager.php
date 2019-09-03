@@ -5,7 +5,7 @@ namespace Model\Manager;
 class CommentManager extends Manager
 {
 
-    public function addComment($content, $postIdpost, $userIduser)
+    public function addComment(string $content, int $postIdpost, int $userIduser)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('INSERT INTO comment (date_comment, date_last_modif, content, 
@@ -26,7 +26,7 @@ class CommentManager extends Manager
      * Get published comments elements and users elements as author names and their Ids
      * @return array
      */
-    public function getComments($idPost) {
+    public function getComments(int $idPost) {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('SELECT idcomment, date_last_modif, content, user_iduser, first_name, last_name  FROM comment
                                         INNER JOIN user ON user.iduser = comment.user_iduser WHERE post_idpost = :idPost AND published = 1
@@ -55,7 +55,7 @@ class CommentManager extends Manager
         return $result;
     }
 
-    public function editComment($content, $commentId)
+    public function editComment(string $content, int $commentId)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('UPDATE comment SET date_last_modif = NOW(), content = :content WHERE idcomment = :commentId');
@@ -69,7 +69,7 @@ class CommentManager extends Manager
         return $result;
     }
 
-    public function validateComment($idComment) {
+    public function validateComment(int $idComment) {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('UPDATE comment SET published = 1 WHERE idcomment = :idComment');
         $response = $req->execute(array(
@@ -79,7 +79,7 @@ class CommentManager extends Manager
         return $response;
     }
 
-    public function deleteComment($idComment)
+    public function deleteComment(int $idComment)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('DELETE FROM comment WHERE idcomment = :idComment');

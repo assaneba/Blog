@@ -2,24 +2,18 @@
 
 namespace Controller;
 
+use Model\Manager\PostManager;
+
 class HomeController extends Controller
 {
 
     public function index()
     {
-        $page = $this->twig->render('home.html.twig');
-        $this->viewPage($page);
-    }
-
-    public function login()
-    {
-        $page = $this->twig->render('login.html.twig');
-        $this->viewPage($page);
-    }
-
-    public function register()
-    {
-        $page = $this->twig->render('register.html.twig');
+        $post = new PostManager();
+        $allPost = $post->getAllPublic();
+        $page = $this->twig->render('home.html.twig', array(
+            'posts' => $allPost
+        ));
         $this->viewPage($page);
     }
 
@@ -41,8 +35,8 @@ class HomeController extends Controller
         $header .= "reply-to: $email";
         if(!mail(EMAIL_TO, $subject, $body, $header))
             http_response_code(500);
-        $this->message = 'Votre mail a été bien envoyé';
         $this->index();
+        $this->showMessage('Votre mail a été bien envoyé');
     }
 
 }

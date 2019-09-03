@@ -7,24 +7,6 @@ use Model\Manager\PostManager;
 
 class BlogController extends Controller
 {
-    protected $message;
-
-    /**
-     * @return mixed
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * @param mixed $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
 
     public function index()
     {
@@ -39,7 +21,7 @@ class BlogController extends Controller
 
     }
 
-    public function article($idPost)
+    public function article(int $idPost)
     {
         //echo 'Voir un article '. $params;
         $tabSession['userIduser'] = 2;
@@ -61,7 +43,7 @@ class BlogController extends Controller
                 ));
             $this->viewPage($page);
         } else {
-            $this->message = 'Erreur 404 : post non trouvé';
+            $this->showMessage('Erreur 404 : post non trouvé');
         }
 
     }
@@ -72,7 +54,7 @@ class BlogController extends Controller
      * @var $commentContent = content of the comment to add
      * @var $_SESSION['userIduser'] = content the id of the user which did the comment
      */
-    public function addComment($postIdpost)
+    public function addComment(int $postIdpost)
     {
         $tabSession['userIduser'] = NULL;
         $commentContent = filter_input(INPUT_POST, 'commentContent');
@@ -80,18 +62,18 @@ class BlogController extends Controller
             $comment = new CommentManager();
             $insertCommentSucceed = $comment->addComment($commentContent, $postIdpost, $tabSession['userIduser']);
             if ($insertCommentSucceed) {
-                $this->message = 'Votre commentaire a été bien enregistré !';
+                $this->showMessage('Votre commentaire a été bien enregistré !');
             } else {
-                $this->message = 'Erreur commentaire non inséré ';
+                $this->showMessage('Erreur commentaire non inséré ');
             }
         }
         else {
-            $this->message = 'Veuillez vous authentifier pour commenter';
+            $this->showMessage('Veuillez vous authentifier pour commenter');
         }
 
     }
 
-    public function editComment($commentId)
+    public function editComment(int $commentId)
     {
         $jsonTab = array();
         $jsonTab['message'] = 'Edition de commentaire avec json';
@@ -116,12 +98,12 @@ class BlogController extends Controller
 
     }
 
-    public function deleteComment($idComment)
+    public function deleteComment(int $idComment)
     {
         $comment = new CommentManager();
-        $response = $comment->deleteComment($idComment);
-        if($response) {
-            $this->message = 'Le commentaire a été bien supprimé ! <a href="../blog/article/2">Retour</a>';
+        $commentIsDeleted = $comment->deleteComment($idComment);
+        if($commentIsDeleted) {
+            $this->showMessage('Le commentaire a été bien supprimé ! ');
         }
 
     }

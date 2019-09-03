@@ -32,7 +32,7 @@
                 <div class="divider-custom-line"></div>
             <p class="masthead-subheading font-weight-bold mb-0 font-italic">Confiez-moi votre projet et j'en fais une réalité ! </p>
                 <div class="divider-custom-line"></div>
-
+            </div>
         </div>
     </header>
 
@@ -63,7 +63,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="img/portfolio/cabin.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/chalets-et-caviar.png" alt="">
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="img/portfolio/cake.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/Festival-films.png" alt="">
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="img/portfolio/circus.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/bd-express-food.png" alt="">
                     </div>
                 </div>
 
@@ -99,37 +99,11 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="img/portfolio/game.png" alt="">
+                        <img class="img-fluid" src="img/portfolio/blog-pro-assane-thione-ba.png" alt="">
                     </div>
                 </div>
 
-                <!-- Portfolio Item 5 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal5">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white">
-                                <i class="fas fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img class="img-fluid" src="img/portfolio/safe.png" alt="">
-                    </div>
-                </div>
-
-                <!-- Portfolio Item 6 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal6">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white">
-                                <i class="fas fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img class="img-fluid" src="img/portfolio/submarine.png" alt="">
-                    </div>
-                </div>
-
-            </div>
             <!-- /.row -->
-
         </div>
     </section>
 
@@ -186,34 +160,16 @@
                     sit amet mi egestas, dictum elit commodo, cursus mi...</p>
             </div>
             <div class="cards-post col-md-8 col-sm-12">
+                {% for post in posts %}
                 <div class="card-post">
-                    <h2><a href="#">Title</a></h2>
-                    <p>Some article description stuff.</p>
+                    <h2><a href="blog/article/{{ post.idpost }}">{{ post.title }}</a></h2>
+                    <p>{{ post.lead }}</p>
                 </div>
-                <div class="card-post">
-                    <h2><a href="#">Title</a></h2>
-                    <p>Some article description stuff.</p>
-                </div>
-                <div class="card-post">
-                    <h2><a href="#">Title</a></h2>
-                    <p>Some article description stuff.</p>
-                </div>
-                <div class="card-post">
-                    <h2><a href="#">Title</a></h2>
-                    <p>Some article description stuff.</p>
-                </div>
-                <div class="card-post">
-                    <h2><a href="#">Title</a></h2>
-                    <p>Some article description stuff.</p>
-                </div>
-                <div class="card-post">
-                    <h2><a href="#">Title</a></h2>
-                    <p>Some article description stuff.</p>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="text-center mt-5">
-        <a href="#" class="btn btn-primary btn-lg">Aller à la page du blog</a>
+        <a href="blog" class="btn btn-primary btn-lg">Aller à la page du blog</a>
         </div>
     </section>
     <!-- / Blog Section -->

@@ -13,7 +13,7 @@ class CategoryManager extends Manager
 
     }
 
-    public function getCategory($idPost)
+    public function getCategory(int $idPost)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('SELECT category_idcategory FROM category_has_post INNER JOIN post ON 
@@ -29,7 +29,7 @@ class CategoryManager extends Manager
 
     }
 
-    public function addCategory($nameCat)
+    public function addCategory(string $nameCat)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('INSERT INTO category (name) VALUES (?)');
@@ -37,7 +37,7 @@ class CategoryManager extends Manager
         $req->execute();
     }
 
-    public function editCategory($idcategory, $nameCat)
+    public function editCategory(int $idcategory, string $nameCat)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('UPDATE category SET name = ? WHERE idcategory = ?');
@@ -47,7 +47,7 @@ class CategoryManager extends Manager
             return true;
     }
 
-    public function deleteCategory($idCategory)
+    public function deleteCategory(int $idCategory)
     {
         $dbc = $this->connectToDB();
         $req = $dbc->prepare('DELETE FROM category WHERE idcategory = :idCategory');

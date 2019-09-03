@@ -27,7 +27,7 @@
                             <td>{{ user.last_name }}</td>
                             <td>{{ user.user_role }}</td>
                             <td class="text-right">
-                                <a class="btn btn-primary" href="../admin/editUser/{{ user.iduser }}">Modifier</a>
+                                <a class="btn btn-primary" href="../user/editUser/{{ user.iduser }}">Modifier</a>
                             </td>
                             <td class="text-right">
                                 <button class="btn btn-danger" id="{{ user.iduser }}" data-action="delete"
@@ -68,7 +68,7 @@
         $(document).ready(function () {
             $('button[data-action="delete"]').click(function () {
                 var i = $(this).attr('id');
-                var path = "../admin/deleteUser/"+ i ;
+                var path = "../user/deleteUser/"+ i ;
                 $('#deletePost .modal-footer a').attr("href", path);
             });
         });
