@@ -115,12 +115,15 @@ class UserController extends Controller
      */
     public function editUser(int $idUser)
     {
-        $user = new UserManager();
-        $user = $user->getUserbyId($idUser);
-        $page = $this->twig->render('admin/modify-user.html.twig', array(
-            'user' => $user
-        ));
-        $this->viewPage($page);
+        if($this->userSession['id'] == $idUser) {
+            $getUser = new UserManager();
+            $user = $getUser->getUserbyId($idUser);
+            $page = $this->twig->render('admin/modify-user.html.twig', array(
+                'user' => $user
+            ));
+            $this->viewPage($page);
+        }
+        $this->index();
     }
 
     public function validateEditUser(int $idUser)

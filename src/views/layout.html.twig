@@ -49,6 +49,7 @@
                             Hello {{ session.username }} !
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="../user/editUser/{{ session.id }}">Modifier ses infos persos</a>
                             <a class="dropdown-item" href="../user/logout">Se déconnecter</a>
                         </div>
                     </li>
