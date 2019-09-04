@@ -26,6 +26,7 @@
                     <label for="email" class="font-weight-bold">Email</label>
                     <input type="text" class="form-control" id="email" name="email" value="{{ user.email }}">
                 </div>
+                {%  if session.role == 'ROLE_ADMIN' %}
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="role" id="roleUser" value="ROLE_USER" checked>
                     <label class="form-check-label" for="roleUser">
@@ -38,6 +39,7 @@
                         ADMIN
                     </label>
                 </div>
+                {% endif %}
                 <div class="alert alert-warning mt-3" role="alert">
                     Ignorer la partie si dessous si vous ne voulez pas modifier le mot de passe
                 </div>
