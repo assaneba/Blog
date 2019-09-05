@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Controller;
-
 
 use Model\Manager\UserManager;
 
@@ -14,7 +12,6 @@ class UserController extends Controller
         if($this->checkAccessPanel()) {
             $users = new UserManager();
             $users = $users->getUsers();
-            //var_dump($users);die;
             $page = $this->twig->render('admin/manage-users.html.twig', array(
                 'users' => $users
             ));
@@ -46,8 +43,7 @@ class UserController extends Controller
                     $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
                     $home = new AdminController();
                     $home->index();
-                }
-                else {
+                } else {
                     $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
                     $home = new HomeController();
                     $home->index();
@@ -123,7 +119,7 @@ class UserController extends Controller
             ));
             $this->viewPage($page);
         }
-        $this->index();
+
     }
 
     public function validateEditUser(int $idUser)
@@ -135,9 +131,13 @@ class UserController extends Controller
         $userData['password1'] = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
         $userData['password2'] = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
         $userData['userRole'] = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+        if(!isset($userData['userRole']))
+            $userData['userRole'] = 'ROLE_USER';
 
         if(!empty($userData['password1']) AND !empty($userData['password2'])) {
             if($userData['password1'] === $userData['password2']) {
+                // Hash password before fill it in the database
+                $userData['password1'] = password_hash($userData['password1'], PASSWORD_BCRYPT);
                 $updateUser = new UserManager();
                 $updateUser->updateUserWithPass($idUser, $userData);
                 $this->index();

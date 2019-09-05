@@ -14,9 +14,8 @@ class UserManager extends Manager
                                         WHERE email=:email');
         $req->execute(array(':email' => $email));
         $inputs = $req->fetchObject();
-        //var_dump($inputs);die;
         if($inputs){
-            //echo 'User Existe';
+            // if User Exists
             $user = new User($inputs);
             if(password_verify($password, $user->getPassword()))
 
@@ -111,11 +110,11 @@ class UserManager extends Manager
         $req = $dbc->prepare('UPDATE user SET login = ?, first_name = ?, last_name = ?, email = ?, user_role = ?,
                                         password = ? WHERE iduser = ?');
         $req->bindParam(1, $userData['login']);
-        $req->bindParam(2, $userData['first_name']);
-        $req->bindParam(3, $userData['last_name']);
+        $req->bindParam(2, $userData['firstName']);
+        $req->bindParam(3, $userData['lastName']);
         $req->bindParam(4, $userData['email']);
-        $req->bindParam(5, $userData['user_role']);
-        $req->bindParam(6, $userData['password']);
+        $req->bindParam(5, $userData['userRole']);
+        $req->bindParam(6, $userData['password1']);
         $req->bindParam(7, $idUser);
 
         return $req->execute();

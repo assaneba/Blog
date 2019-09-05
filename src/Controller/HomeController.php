@@ -31,12 +31,12 @@ class HomeController extends Controller
         // Create the email and send the message
         $subject = "Website Contact Form - email from:  $name";
         $body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email\n\nPhone: $phone\n\nMessage:\n$message";
-        $header = "From: noreply@yourdomain.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
+        $header = "From: contact-blog@assaneba.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
         $header .= "reply-to: $email";
         if(!mail(EMAIL_TO, $subject, $body, $header))
             http_response_code(500);
-            $this->index();
-            $this->showMessage('Votre mail a été bien envoyé');
+            //$this->index();
+            //$this->showMessage('Votre mail a été bien envoyé');
     }
 
 }
