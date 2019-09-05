@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Controller;
-
 
 use Model\Manager\UserManager;
 
@@ -45,8 +43,7 @@ class UserController extends Controller
                     $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
                     $home = new AdminController();
                     $home->index();
-                }
-                else {
+                } else {
                     $this->createSession($user->getIdUser(), $user->getFirstName(), $user->getUserRole());
                     $home = new HomeController();
                     $home->index();
@@ -122,7 +119,7 @@ class UserController extends Controller
             ));
             $this->viewPage($page);
         }
-        $this->index();
+
     }
 
     public function validateEditUser(int $idUser)

@@ -14,9 +14,8 @@ class UserManager extends Manager
                                         WHERE email=:email');
         $req->execute(array(':email' => $email));
         $inputs = $req->fetchObject();
-        //var_dump($inputs);die;
         if($inputs){
-            //echo 'User Existe';
+            // if User Exists
             $user = new User($inputs);
             if(password_verify($password, $user->getPassword()))
 
