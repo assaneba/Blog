@@ -16,7 +16,7 @@
     "jquery": "~3.5.1",
     "jquery.easing": "~1.4.1",
     "sb-admin-2": "~3.3.8",
-    "startbootstrap-freelancer": "~6.0.5"
+    "startbootstrap-freelancer": "~7.0.3"
   },
   "repository": {
     "type": "git",
