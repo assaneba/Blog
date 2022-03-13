@@ -1,7 +1,6 @@
 # Blog pro
 
 My professional Blog 
-[![Dependabot](https://badgen.net/dependabot/dependabot/dependabot-core/?icon=dependabot)](https://github.com/assaneba/Blog/graphs/contributors)
 
 ---
 
